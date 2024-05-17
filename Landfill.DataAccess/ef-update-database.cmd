@@ -1,0 +1,1 @@
+dotnet.exe ef database update %1

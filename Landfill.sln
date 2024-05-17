@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landfill", "Landfill\Landfill.csproj", "{AF34B187-EB3F-45DB-A5F9-15E0714C3BA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{63E07D0C-CB98-493F-BAFF-522EA60378C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landfill.DataAccess", "Landfill.DataAccess\Landfill.DataAccess.csproj", "{3B805DEE-67C9-4DF5-93E2-2916F8691E33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF34B187-EB3F-45DB-A5F9-15E0714C3BA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF34B187-EB3F-45DB-A5F9-15E0714C3BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF34B187-EB3F-45DB-A5F9-15E0714C3BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF34B187-EB3F-45DB-A5F9-15E0714C3BA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B805DEE-67C9-4DF5-93E2-2916F8691E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B805DEE-67C9-4DF5-93E2-2916F8691E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B805DEE-67C9-4DF5-93E2-2916F8691E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B805DEE-67C9-4DF5-93E2-2916F8691E33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B805DEE-67C9-4DF5-93E2-2916F8691E33} = {63E07D0C-CB98-493F-BAFF-522EA60378C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E5D66EE-67D7-4C5D-954A-2D0196F9784B}
+	EndGlobalSection
+EndGlobal
