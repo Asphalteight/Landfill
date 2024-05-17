@@ -16,12 +16,12 @@ namespace Landfill.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrganizationFullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrganizationInn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizationFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizationInn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
