@@ -9,6 +9,11 @@ namespace Landfill.DataAccess.Configuration
         public void Configure(EntityTypeBuilder<UserAccount> builder)
         {
             builder.ToTable("UserAccounts");
+
+            builder.Property(x => x.PasswordHash).HasMaxLength(64);
+            builder.Property(x => x.Salt).HasMaxLength(64);
+            builder.HasOne(x => x.Client).WithOne(x => x.UserAccount).HasForeignKey<Client>(x => x.UserAccountId);
+            builder.Navigation(x => x.Client).AutoInclude();
         }
     }
 }

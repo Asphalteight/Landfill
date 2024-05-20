@@ -9,5 +9,7 @@
         public string PasswordHash { get; set; }
 
         public string Salt { get; set; }
+
+        public Client Client { get; set; }
     }
 }

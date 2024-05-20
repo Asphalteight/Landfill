@@ -15,5 +15,10 @@
         public string LastName { get; set; }
 
         public string MiddleName { get; set; }
+
+        public UserAccount UserAccount { get; set; }
+        public int UserAccountId { get; set; }
+
+
     }
 }
