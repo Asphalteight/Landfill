@@ -1,16 +1,23 @@
 ﻿namespace Landfill.DataAccess.Models
 {
-    public class Employee : BaseEntity<int>
+    /// <summary>
+    /// Сотрудник
+    /// </summary>
+    public class Employee : PersonEntity<int>
     {
-        public string FirstName { get; set; }
+        /// <summary>
+        /// Должность
+        /// </summary>
+        public string Position { get; set; }
 
-        public string LastName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string Phone { get; set; }
-
+        /// <summary>
+        /// Аккаунт
+        /// </summary>
         public UserAccount UserAccount { get; set; }
+
+        /// <summary>
+        /// Идентификатор аккаунта
+        /// </summary>
         public int UserAccountId { get; set; }
     }
 }

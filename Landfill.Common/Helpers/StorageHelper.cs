@@ -1,5 +1,8 @@
-﻿using System.IO.IsolatedStorage;
+﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Security.Principal;
+using System.Threading;
 
 namespace Landfill.Common.Helpers
 {

@@ -1,23 +1,23 @@
 ﻿namespace Landfill.Common.Enums
 {
     /// <summary>
-    /// Роль пользователя
+    /// Статус проекта
     /// </summary>
-    public enum RoleEnum
+    public enum ProjectStateEnum
     {
         /// <summary>
-        /// Обычный
+        /// Создан
         /// </summary>
-        User = 0,
+        Created = 0,
 
         /// <summary>
-        /// Менеджер
+        /// В работе
         /// </summary>
-        Manager = 1,
+        InProgress = 1,
 
         /// <summary>
-        /// Администратор
+        /// Завершен
         /// </summary>
-        Admin = 2
+        Done = 2
     }
 }

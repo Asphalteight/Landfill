@@ -9,6 +9,8 @@ namespace Landfill.DataAccess.Configuration
         public void Configure(EntityTypeBuilder<RoleToUser> builder)
         {
             builder.ToTable("RolesToUsers");
+
+            builder.Property(x => x.Role).IsRequired();
         }
     }
 }

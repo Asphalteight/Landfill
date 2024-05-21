@@ -9,7 +9,8 @@ namespace Landfill.Automapper
         public ModelToModelMapProfile()
         {
             CreateMap<Employee, EmployeeInfoModel>();
-            CreateMap<EmployeeInfoModel, Employee>();
+            CreateMap<EmployeeInfoModel, Employee>()
+                .ForMember(x => x.Position, m => m.MapFrom(x => "Сотрудник"));
 
             CreateMap<CredentialsModel, CredentialsModel>();
         }

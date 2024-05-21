@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindowView" 
         Height="720"
-        Width="1000"
+        Width="1020"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, IsDesignTimeCreatable=False}">
 

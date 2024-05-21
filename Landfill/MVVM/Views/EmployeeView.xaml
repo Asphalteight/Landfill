@@ -16,9 +16,9 @@
             Content="Выйти"
             VerticalAlignment="Top" 
             HorizontalAlignment="Left"
-            Margin="867,41,0,0" 
-            Height="38" Width="103" 
-            FontSize="18"
+            Margin="916,2,0,0" 
+            Height="38" Width="82" 
+            FontSize="15"
             Background="Green"/>
     </Grid>
 </UserControl>

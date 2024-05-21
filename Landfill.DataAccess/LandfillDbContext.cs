@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Landfill.DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -21,6 +23,18 @@ namespace Landfill.DataAccess
 
         public IQueryable<TEntity> QuerySet<TEntity>() where TEntity : class => Set<TEntity>();
 
-        public override int SaveChanges() => SaveChanges(true);
+        public override int SaveChanges()
+        {
+            foreach (var entityEntry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is BaseEntityWithTime))
+            {
+                ((BaseEntityWithTime)entityEntry.Entity).CreatedOn = DateTime.UtcNow;
+            }
+            foreach (var entityEntry in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is BaseEntityWithTime))
+            {
+                ((BaseEntityWithTime)entityEntry.Entity).UpdatedOn = DateTime.UtcNow;
+            }
+
+            return SaveChanges(true);
+        }
     }
 }

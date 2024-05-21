@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Landfill.Abstractions;
+using Landfill.Common.Enums;
 using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
@@ -64,7 +65,7 @@ namespace Landfill.MVVM.ViewModels
                 Salt = salt,
                 Employee = _mapper.Map<Employee>(EmployeeInfo)
             };
-            user.Roles.Add(new RoleToUser { Role = DataAccess.Models.Enums.RoleEnum.User });
+            user.Roles.Add(new RoleToUser { Role = RoleEnum.User });
 
             _dbContext.Add(user);
             _dbContext.SaveChanges();
