@@ -13,13 +13,15 @@
 
     <Grid>
         <TextBlock
-            Text="Имя пользователя"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="15"
-            Margin="263,202,0,0" 
+            Margin="261,202,0,0" 
             TextWrapping="Wrap"
-            Height="20"/>
+            Height="20">
+            <Run Text="Имя пользователя"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
 
         <custom:CustomTextBox 
             Text="{Binding Credentials.Login, UpdateSourceTrigger=PropertyChanged}"
@@ -44,12 +46,14 @@
             FontSize="12"/>
 
         <TextBlock 
-            Text="Пароль"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="15"
-            Margin="343,268,0,0" 
-            TextWrapping="Wrap"/>
+            Margin="338,268,0,0" 
+            TextWrapping="Wrap">
+            <Run Text="Пароль"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
         
         <custom:CustomPasswordBox 
             Password="{Binding Credentials.Password}"
@@ -72,14 +76,17 @@
             Foreground="Red"
             Width="302"
             FontSize="12"/>
-        
+
         <TextBlock 
-            Text="Повторите пароль"
+
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="15"
-            Margin="267,338,0,0" 
-            TextWrapping="Wrap" />
+            Margin="262,338,0,0" 
+            TextWrapping="Wrap">
+            <Run Text="Повторите пароль"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
         
         <custom:CustomPasswordBox 
             Password="{Binding Credentials.PasswordDublicate}"

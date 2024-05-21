@@ -13,7 +13,7 @@ namespace Landfill.MVVM.ViewModels
         #region Проперти
 
         private readonly IDbContext _dbContext;
-        private readonly ICredentialsService _userInfoService;
+        private readonly ICredentialsService _credentialsService;
         private ErrorMessageModel _errorMessage;
         private EmployeeInfoModel _employeeInfo = new();
         private INavigationService _navigation;
@@ -30,7 +30,7 @@ namespace Landfill.MVVM.ViewModels
         {
             Navigation = navigation;
             _dbContext = dbContext;
-            _userInfoService = userInfoService;
+            _credentialsService = userInfoService;
 
             PreviousStepCommand = new ViewModelCommand(x => Navigation.NavigateTo<SignUpViewModel>());
             SignUpCommand = new ViewModelCommand(ExecuteSignUpCommand, CanExecuteSignUpCommand);
@@ -45,7 +45,7 @@ namespace Landfill.MVVM.ViewModels
 
         private void ExecuteSignUpCommand(object obj)
         {
-            var credentials = _userInfoService.Get();
+            var credentials = _credentialsService.Get();
             var salt = PasswordHelper.GenerateSalt();
             var passwordHash = credentials.Password.GetHash(salt);
 

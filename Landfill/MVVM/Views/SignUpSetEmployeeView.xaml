@@ -12,35 +12,88 @@
              d:DataContext="{d:DesignInstance vm:SignUpSetEmployeeViewModel, IsDesignTimeCreatable=False}">
     <Grid>
         <TextBlock
-            Text="Имя"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="15"
-            Margin="360,202,0,0" 
+            Margin="363,211,0,0" 
             TextWrapping="Wrap"
-            Height="20"/>
-        
+            Height="20">
+            <Run Text="Имя"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
+
         <custom:CustomTextBox 
             Text="{Binding EmployeeInfo.FirstName, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Width="218" 
+            Width="268" 
             TextBlock.FontSize="16"
-            Margin="403,192,0,0"
+            Margin="408,201,0,0"
             Height="40"
             Padding="10 7 10 0"/>
-        
+
         <TextBlock 
-            Text="{Binding ErrorMessage.Login}" 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            Margin="330,266,0,0" 
+            TextWrapping="Wrap"
+            Height="20">
+            <Run Text="Фамилия"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
+
+        <custom:CustomTextBox 
+            Text="{Binding EmployeeInfo.LastName, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="413,232,0,0"
-            TextWrapping="Wrap" 
-            TextAlignment="Left" 
-            Foreground="Red"
-            Width="208"
-            FontSize="12"/>
-        
+            Width="268" 
+            TextBlock.FontSize="16"
+            Margin="408,256,0,0"
+            Height="40"
+            Padding="10 7 10 0"/>
+
+        <TextBlock 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            Margin="330,320,0,0" 
+            TextWrapping="Wrap"
+            Height="20">
+            <Run Text="Отчество"/>
+        </TextBlock>
+
+        <custom:CustomTextBox 
+            Text="{Binding EmployeeInfo.MiddleName, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="268" 
+            TextBlock.FontSize="16"
+            Margin="408,310,0,0"
+            Height="40"
+            Padding="10 7 10 0"/>
+
+        <TextBlock 
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            Margin="277,394,0,0" 
+            TextWrapping="Wrap"
+            Height="20">
+            <Run Text="Номер телефона"/>
+            <Run Text="*" Foreground="Red"/>
+        </TextBlock>
+
+        <custom:CustomTextBox 
+            Text="{Binding EmployeeInfo.Phone, UpdateSourceTrigger=PropertyChanged}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" 
+            Width="302"
+            TextBlock.FontSize="16"
+            Margin="408,384,0,0"
+            Height="40"
+            Padding="10 7 10 0"/>
+
         <custom:CustomButton
             Command="{Binding SignUpCommand}"
             Content="Зарегистрироваться"
@@ -62,6 +115,6 @@
                 <MouseBinding Command="{Binding PreviousStepCommand}" MouseAction="LeftClick"/>
             </TextBlock.InputBindings>
         </TextBlock>
-        
+
     </Grid>
 </UserControl>
