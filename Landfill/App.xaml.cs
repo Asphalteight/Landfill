@@ -1,4 +1,5 @@
 ﻿using Landfill.Abstractions;
+using Landfill.Automapper;
 using Landfill.DataAccess;
 using Landfill.MVVM;
 using Landfill.MVVM.ViewModels;
@@ -37,6 +38,7 @@ namespace Landfill
             services.AddSingleton<Func<Type, ViewModelBase>>(provider => viewModel => (ViewModelBase)provider.GetRequiredService(viewModel));
 
             services.AddDbContext<IDbContext, LandfillDbContext>();
+            services.AddAutoMapper(typeof(ModelToModelMapProfile).Assembly);
 
             _serviceProvider = services.BuildServiceProvider();
 

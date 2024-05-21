@@ -1,4 +1,5 @@
-﻿using Landfill.Abstractions;
+﻿using AutoMapper;
+using Landfill.Abstractions;
 using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
@@ -13,6 +14,7 @@ namespace Landfill.MVVM.ViewModels
         #region Проперти
 
         private readonly IDbContext _dbContext;
+        private readonly IMapper _mapper;
         private readonly ICredentialsService _credentialsService;
         private ErrorMessageModel _errorMessage;
         private EmployeeInfoModel _employeeInfo = new();
@@ -26,11 +28,12 @@ namespace Landfill.MVVM.ViewModels
 
         #endregion
 
-        public SignUpSetEmployeeViewModel(INavigationService navigation, IDbContext dbContext, ICredentialsService userInfoService)
+        public SignUpSetEmployeeViewModel(INavigationService navigation, IDbContext dbContext, ICredentialsService userInfoService, IMapper mapper)
         {
             Navigation = navigation;
             _dbContext = dbContext;
             _credentialsService = userInfoService;
+            _mapper = mapper;
 
             PreviousStepCommand = new ViewModelCommand(x => Navigation.NavigateTo<SignUpViewModel>());
             SignUpCommand = new ViewModelCommand(ExecuteSignUpCommand, CanExecuteSignUpCommand);
@@ -53,16 +56,9 @@ namespace Landfill.MVVM.ViewModels
             {
                 Login = credentials.Login,
                 PasswordHash = passwordHash,
-                Salt = salt
+                Salt = salt,
+                Employee = _mapper.Map<Employee>(EmployeeInfo)
             };
-            var employee = new Employee 
-            {
-                FirstName = EmployeeInfo.FirstName,
-                LastName = EmployeeInfo.LastName,
-                MiddleName = EmployeeInfo.MiddleName,
-                Phone = EmployeeInfo.Phone
-            };
-            user.Employee = employee;
             user.Roles.Add(new RoleToUser { Role = DataAccess.Models.Enums.RoleEnum.User });
 
             _dbContext.Add(user);

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Linq;
 using Landfill.Common.Helpers;
 using Landfill.MVVM.Models;
+using AutoMapper;
 
 namespace Landfill.MVVM.ViewModels
 {
@@ -15,6 +16,7 @@ namespace Landfill.MVVM.ViewModels
         #region Проперти
 
         private readonly IDbContext _dbContext;
+        private readonly IMapper _mapper;
         private EmployeeInfoModel _currentUser;
         private INavigationService _navigation;
 
@@ -24,10 +26,11 @@ namespace Landfill.MVVM.ViewModels
 
         #endregion
 
-        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext)
+        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper)
         {
             _navigation = navigation;
             _dbContext = dbContext;
+            _mapper = mapper;
 
             LogoutCommand = new ViewModelCommand(ExecuteLogoutCommand);
 
@@ -48,14 +51,7 @@ namespace Landfill.MVVM.ViewModels
             var employee = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == currentUserLogin)?.Employee;
             if (employee != null)
             {
-                CurrentUser = new EmployeeInfoModel
-                {
-                    Id = employee.Id,
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    MiddleName = employee.MiddleName,
-                    Phone = employee.Phone
-                };
+                CurrentUser = _mapper.Map<EmployeeInfoModel>(employee);
             }
         }
     }
