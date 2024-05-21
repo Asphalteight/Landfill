@@ -15,6 +15,8 @@ namespace Landfill.DataAccess.Configuration
             builder.Property(x => x.MiddleName).HasMaxLength(100);
             builder.Property(x => x.Phone).HasMaxLength(50);
             builder.Property(x => x.Position).HasMaxLength(100);
+
+            builder.HasMany(x => x.BuildProjects).WithOne(x => x.Employee).HasForeignKey(x => x.EmployeeId);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Landfill.DataAccess.Models
+﻿using System.Collections.Generic;
+
+namespace Landfill.DataAccess.Models
 {
     /// <summary>
     /// Сотрудник
@@ -19,5 +21,10 @@
         /// Идентификатор аккаунта
         /// </summary>
         public int UserAccountId { get; set; }
+
+        /// <summary>
+        /// Созданные строительные проекты
+        /// </summary>
+        public List<BuildProject> BuildProjects { get; set; } = [];
     }
 }

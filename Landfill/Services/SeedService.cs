@@ -13,6 +13,7 @@ namespace Landfill.Services
     public class SeedService : IHostedService
     {
         private readonly IDbContext _dbContext;
+        private const string Admin = "admin";
 
         public SeedService(IDbContext dbContext)
         {
@@ -24,12 +25,15 @@ namespace Landfill.Services
             SeedUserAccounts();
             SeedBuildProjects();
 
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
         private void SeedBuildProjects()
         {
             var projectName = "Строительный проект детской площадки";
+
+            var employee = _dbContext.QuerySet<UserAccount>().First(x => x.Login == Admin).Employee;
             var project = _dbContext.QuerySet<BuildProject>().FirstOrDefault(x => x.Name == projectName);
             if (project == null)
             {
@@ -44,28 +48,26 @@ namespace Landfill.Services
                     Members = [
                     new ProjectMember { FirstName = "Василий", LastName = "Морозов", MiddleName = "Сергеевич", Phone = "+79998888888" },
                         new ProjectMember { FirstName = "Владислав", LastName = "Владов", MiddleName = "Дмитриевич", Phone = "+72222222222" }
-                    ]
+                    ],
+                    EmployeeId = employee.Id
                 };
 
                 _dbContext.Add(project);
-                _dbContext.SaveChanges();
             }
         }
 
         private void SeedUserAccounts()
         {
-            var (login, password) = ("admin", "admin");
-
-            var userAccount = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == login);
+            var userAccount = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == Admin);
             if (userAccount == null)
             {
                 var salt = PasswordHelper.GenerateSalt();
 
                 userAccount = new UserAccount
                 {
-                    Login = login,
+                    Login = Admin,
                     Salt = salt,
-                    PasswordHash = password.GetHash(salt),
+                    PasswordHash = Admin.GetHash(salt),
                     Employee = new Employee
                     {
                         FirstName = "Олег",
@@ -78,7 +80,6 @@ namespace Landfill.Services
                 userAccount.Roles.Add(new RoleToUser { Role = RoleEnum.Admin });
 
                 _dbContext.Add(userAccount);
-                _dbContext.SaveChanges();
             }
         }
 

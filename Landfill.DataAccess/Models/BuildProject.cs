@@ -53,5 +53,15 @@ namespace Landfill.DataAccess.Models
         /// Участники проекта
         /// </summary>
         public List<ProjectMember> Members { get; set; } = [];
+
+        /// <summary>
+        /// Сотрудник, создавший проект
+        /// </summary>
+        public Employee Employee { get; set; }
+
+        /// <summary>
+        /// Идентификатор сотрудника-создателя
+        /// </summary>
+        public int EmployeeId { get; set; }
     }
 }
