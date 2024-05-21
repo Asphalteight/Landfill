@@ -25,7 +25,7 @@ namespace Landfill.MVVM.ViewModels
         {
             Navigation = navigation;
 
-            BackToSignInCommand = new ViewModelCommand(x => Navigation.NavigateTo<SignInViewModel>());
+            BackToSignInCommand = new ViewModelCommand(x => { _timer.Dispose(); Navigation.NavigateTo<SignInViewModel>(); });
             StartTimer();
         }
 
@@ -39,7 +39,6 @@ namespace Landfill.MVVM.ViewModels
             _lifeTime -= _period;
             if (_lifeTime <= 0)
             {
-                _timer.Dispose();
                 RunCommand(BackToSignInCommand);
                 return;
             }

@@ -41,7 +41,7 @@ namespace Landfill.MVVM.ViewModels
         private bool CanExecuteNextStepCommand(object obj)
         {
             var canExecute = true;
-            if (Credentials.Login.IsNullOrWhiteSpace() || Credentials.Password.IsNullOrWhiteSpace() || Credentials.PasswordDublicate.IsNullOrWhiteSpace())
+            if ((new[] { Credentials.Login, Credentials.Password, Credentials.PasswordDublicate }).Any(x => x.IsNullOrWhiteSpace()))
             {
                 canExecute = false;
             }

@@ -5,6 +5,7 @@ using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
 using Landfill.MVVM.Models;
 using Landfill.Services;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
@@ -41,7 +42,11 @@ namespace Landfill.MVVM.ViewModels
 
         private bool CanExecuteSignUpCommand(object obj)
         {
-            var canExecute = !EmployeeInfo.FirstName.IsNullOrWhiteSpace();
+            var canExecute = true;
+            if ((new[] { EmployeeInfo.FirstName, EmployeeInfo.LastName, EmployeeInfo.Phone }).Any(x => x.IsNullOrWhiteSpace()))
+            {
+                canExecute = false;
+            }
 
             return canExecute;
         }
@@ -64,6 +69,7 @@ namespace Landfill.MVVM.ViewModels
             _dbContext.Add(user);
             _dbContext.SaveChanges();
 
+            _credentialsService.Set(new CredentialsModel());
             RunCommand(x => Navigation.NavigateTo<SignUpSuccessViewModel>());
         }
     }
