@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Landfill.MVVM.Views.SignUpSuccessView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
+             mc:Ignorable="d" 
+             Height="700"
+             Width="1000"
+             Background="AliceBlue"
+             d:DataContext="{d:DesignInstance vm:SignUpSuccessViewModel, IsDesignTimeCreatable=False}">
+    <Grid>
+        <TextBlock 
+            Text="Аккаунт успешно зарегистрирован"
+            FontSize="30" TextAlignment="Center" 
+            HorizontalAlignment="Center" 
+            Margin="0,252,0,0"
+            TextWrapping="Wrap"
+            Foreground="#027E77" 
+            VerticalAlignment="Top"
+            Width="616"/>
+        
+        <TextBlock 
+            Text="Вы вернетесь на главную страницу через..." 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Margin="310,314,0,0" 
+            TextAlignment="Center"
+            FontSize="15"
+            Foreground="#027E77"/>
+
+        <Border 
+            CornerRadius="50"
+            Margin="620,311,355,364"
+            BorderBrush="#027E77"
+            BorderThickness="1"
+            Height="25"
+            Width="25">
+            <TextBlock 
+                Text="{Binding BackToSignRemaningSeconds}"
+                FontSize="16" 
+                TextAlignment="Center" 
+                HorizontalAlignment="Center" 
+                TextWrapping="Wrap"
+                Foreground="#027E77" 
+                VerticalAlignment="Center"/>
+        </Border>
+
+        <TextBlock 
+            Text="Пропустить" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top" 
+            Margin="0,399,0,0" 
+            TextAlignment="Center"
+            FontSize="20"
+            Style="{StaticResource HoverUnderlineStyle}">
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding BackToSignInCommand}" MouseAction="LeftClick"/>
+            </TextBlock.InputBindings>
+        </TextBlock>
+    </Grid>
+</UserControl>
