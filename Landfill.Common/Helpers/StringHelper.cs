@@ -1,4 +1,4 @@
-﻿namespace Landfill.Helpers
+﻿namespace Landfill.Common.Helpers
 {
     public static class StringHelper
     {

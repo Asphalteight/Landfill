@@ -3,6 +3,7 @@ using Landfill.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Landfill.DataAccess.Migrations
 {
     [DbContext(typeof(LandfillDbContext))]
-    partial class LandfillDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521132110_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace Landfill.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Landfill.DataAccess.Models.Employee", b =>
+            modelBuilder.Entity("Landfill.DataAccess.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,20 +33,22 @@ namespace Landfill.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("OrganizationFullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationInn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserAccountId")
                         .HasColumnType("int");
@@ -53,7 +58,7 @@ namespace Landfill.DataAccess.Migrations
                     b.HasIndex("UserAccountId")
                         .IsUnique();
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Landfill.DataAccess.Models.RoleToUser", b =>
@@ -86,8 +91,7 @@ namespace Landfill.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Login")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasMaxLength(64)
@@ -102,11 +106,11 @@ namespace Landfill.DataAccess.Migrations
                     b.ToTable("UserAccounts", (string)null);
                 });
 
-            modelBuilder.Entity("Landfill.DataAccess.Models.Employee", b =>
+            modelBuilder.Entity("Landfill.DataAccess.Models.Client", b =>
                 {
                     b.HasOne("Landfill.DataAccess.Models.UserAccount", "UserAccount")
-                        .WithOne("Employee")
-                        .HasForeignKey("Landfill.DataAccess.Models.Employee", "UserAccountId")
+                        .WithOne("Client")
+                        .HasForeignKey("Landfill.DataAccess.Models.Client", "UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -126,7 +130,7 @@ namespace Landfill.DataAccess.Migrations
 
             modelBuilder.Entity("Landfill.DataAccess.Models.UserAccount", b =>
                 {
-                    b.Navigation("Employee");
+                    b.Navigation("Client");
 
                     b.Navigation("Roles");
                 });

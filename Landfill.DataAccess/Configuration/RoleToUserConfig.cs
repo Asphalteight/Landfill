@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Landfill.DataAccess.Configuration
 {
-    public class ClientConfig : IEntityTypeConfiguration<Client>
+    public class RoleToUserConfig : IEntityTypeConfiguration<RoleToUser>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<RoleToUser> builder)
         {
-            builder.ToTable("Clients");
+            builder.ToTable("RolesToUsers");
         }
     }
 }

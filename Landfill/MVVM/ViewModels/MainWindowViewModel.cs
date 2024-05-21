@@ -1,5 +1,5 @@
 ﻿using Landfill.Abstractions;
-using Landfill.Helpers;
+using Landfill.Common.Helpers;
 using Landfill.Services;
 
 namespace Landfill.MVVM.ViewModels
@@ -22,7 +22,7 @@ namespace Landfill.MVVM.ViewModels
             var currentUserName = StorageHelper.GetStoredUser();
             if (currentUserName != null)
             {
-                RunCommand(x => Navigation.NavigateTo<ClientViewModel>());
+                RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>());
             }
             else
             {

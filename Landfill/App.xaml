@@ -14,16 +14,16 @@
             <view:SignUpView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:ClientViewModel}">
-            <view:ClientView/>
+        <DataTemplate DataType="{x:Type viewModel:EmployeeViewModel}">
+            <view:EmployeeView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type viewModel:SignUpSuccessViewModel}">
             <view:SignUpSuccessView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:SignUpSetClientInfoViewModel}">
-            <view:SignUpSetClientInfoView/>
+        <DataTemplate DataType="{x:Type viewModel:SignUpSetEmployeeViewModel}">
+            <view:SignUpSetEmployeeView/>
         </DataTemplate>
 
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">

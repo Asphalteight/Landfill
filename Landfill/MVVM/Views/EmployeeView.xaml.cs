@@ -3,11 +3,11 @@
 namespace Landfill.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for ClientView.xaml
+    /// Interaction logic for EmployeeView.xaml
     /// </summary>
-    public partial class ClientView : UserControl
+    public partial class EmployeeView : UserControl
     {
-        public ClientView()
+        public EmployeeView()
         {
             InitializeComponent();
         }

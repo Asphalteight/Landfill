@@ -10,10 +10,14 @@ namespace Landfill.DataAccess.Configuration
         {
             builder.ToTable("UserAccounts");
 
+            builder.Property(x => x.Login).HasMaxLength(64);
             builder.Property(x => x.PasswordHash).HasMaxLength(64);
             builder.Property(x => x.Salt).HasMaxLength(64);
-            builder.HasOne(x => x.Client).WithOne(x => x.UserAccount).HasForeignKey<Client>(x => x.UserAccountId);
-            builder.Navigation(x => x.Client).AutoInclude();
+
+            builder.HasOne(x => x.Employee).WithOne(x => x.UserAccount).HasForeignKey<Employee>(x => x.UserAccountId);
+            builder.HasMany(x => x.Roles).WithOne(x => x.UserAccount).HasForeignKey(x => x.UserAccountId);
+
+            builder.Navigation(x => x.Employee).AutoInclude();
         }
     }
 }

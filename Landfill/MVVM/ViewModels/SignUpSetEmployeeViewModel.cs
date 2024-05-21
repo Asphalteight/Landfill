@@ -1,32 +1,32 @@
 ﻿using Landfill.Abstractions;
+using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
-using Landfill.Helpers;
 using Landfill.MVVM.Models;
 using Landfill.Services;
 using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
-    public class SignUpSetClientInfoViewModel : ViewModelBase
+    public class SignUpSetEmployeeViewModel : ViewModelBase
     {
         #region Проперти
 
         private readonly IDbContext _dbContext;
         private readonly ICredentialsService _userInfoService;
         private ErrorMessageModel _errorMessage;
-        private ClientInfoModel _clientInfo = new();
+        private EmployeeInfoModel _employeeInfo = new();
         private INavigationService _navigation;
 
         public ErrorMessageModel ErrorMessage { get => _errorMessage; set { _errorMessage = value; OnPropertyChanged(); } }
-        public ClientInfoModel ClientInfo { get => _clientInfo; set { _clientInfo = value; OnPropertyChanged(); } }
+        public EmployeeInfoModel EmployeeInfo { get => _employeeInfo; set { _employeeInfo = value; OnPropertyChanged(); } }
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
         public ICommand PreviousStepCommand { get; }
         public ICommand SignUpCommand { get; }
 
         #endregion
 
-        public SignUpSetClientInfoViewModel(INavigationService navigation, IDbContext dbContext, ICredentialsService userInfoService)
+        public SignUpSetEmployeeViewModel(INavigationService navigation, IDbContext dbContext, ICredentialsService userInfoService)
         {
             Navigation = navigation;
             _dbContext = dbContext;
@@ -38,7 +38,7 @@ namespace Landfill.MVVM.ViewModels
 
         private bool CanExecuteSignUpCommand(object obj)
         {
-            var canExecute = !ClientInfo.FirstName.IsNullOrWhiteSpace();
+            var canExecute = !EmployeeInfo.FirstName.IsNullOrWhiteSpace();
 
             return canExecute;
         }
@@ -55,11 +55,15 @@ namespace Landfill.MVVM.ViewModels
                 PasswordHash = passwordHash,
                 Salt = salt
             };
-            var client = new Client 
+            var employee = new Employee 
             {
-                FirstName = ClientInfo.FirstName
+                FirstName = EmployeeInfo.FirstName,
+                LastName = EmployeeInfo.LastName,
+                MiddleName = EmployeeInfo.MiddleName,
+                Phone = EmployeeInfo.Phone
             };
-            user.Client = client;
+            user.Employee = employee;
+            user.Roles.Add(new RoleToUser { Role = DataAccess.Models.Enums.RoleEnum.User });
 
             _dbContext.Add(user);
             _dbContext.SaveChanges();

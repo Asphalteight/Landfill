@@ -1,7 +1,7 @@
 ﻿using Landfill.Abstractions;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
-using Landfill.Helpers;
+using Landfill.Common.Helpers;
 using Landfill.MVVM.Models;
 using Landfill.Services;
 using System.Linq;
@@ -72,7 +72,7 @@ namespace Landfill.MVVM.ViewModels
 
             _userInfoService.Set(Credentials);
 
-            RunCommand(x => Navigation.NavigateTo<SignUpSetClientInfoViewModel>());
+            RunCommand(x => Navigation.NavigateTo<SignUpSetEmployeeViewModel>());
         }
 
         [GeneratedRegex(@"[0-9]+")]

@@ -1,15 +1,17 @@
-﻿namespace Landfill.DataAccess.Models
-{
-    public class UserAccount
-    {
-        public int Id { get; set; }
+﻿using System.Collections.Generic;
 
+namespace Landfill.DataAccess.Models
+{
+    public class UserAccount : BaseEntity<int>
+    {
         public string Login {  get; set; }
 
         public string PasswordHash { get; set; }
 
         public string Salt { get; set; }
 
-        public Client Client { get; set; }
+        public Employee Employee { get; set; }
+
+        public List<RoleToUser> Roles { get; set; } = [];
     }
 }

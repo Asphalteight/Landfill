@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Landfill.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for SignUpSetClientInfoView.xaml
+    /// Interaction logic for SignUpSetEmployeeView.xaml
     /// </summary>
-    public partial class SignUpSetClientInfoView : UserControl
+    public partial class SignUpSetEmployeeView : UserControl
     {
-        public SignUpSetClientInfoView()
+        public SignUpSetEmployeeView()
         {
             InitializeComponent();
         }

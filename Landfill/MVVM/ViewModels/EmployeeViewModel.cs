@@ -5,26 +5,26 @@ using Landfill.Services;
 using System.Threading;
 using System.Windows.Input;
 using System.Linq;
-using Landfill.Helpers;
+using Landfill.Common.Helpers;
 using Landfill.MVVM.Models;
 
 namespace Landfill.MVVM.ViewModels
 {
-    public class ClientViewModel : ViewModelBase
+    public class EmployeeViewModel : ViewModelBase
     {
         #region Проперти
 
         private readonly IDbContext _dbContext;
-        private ClientInfoModel _currentUser;
+        private EmployeeInfoModel _currentUser;
         private INavigationService _navigation;
 
-        public ClientInfoModel CurrentUser { get => _currentUser; set { _currentUser = value; OnPropertyChanged(); } }
+        public EmployeeInfoModel CurrentUser { get => _currentUser; set { _currentUser = value; OnPropertyChanged(); } }
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
         public ICommand LogoutCommand { get; }
 
         #endregion
 
-        public ClientViewModel(INavigationService navigation, IDbContext dbContext)
+        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext)
         {
             _navigation = navigation;
             _dbContext = dbContext;
@@ -45,13 +45,16 @@ namespace Landfill.MVVM.ViewModels
         {
             var currentUserLogin = Thread.CurrentPrincipal?.Identity?.Name;
 
-            var client = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == currentUserLogin)?.Client;
-            if (client != null)
+            var employee = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == currentUserLogin)?.Employee;
+            if (employee != null)
             {
-                CurrentUser = new ClientInfoModel
+                CurrentUser = new EmployeeInfoModel
                 {
-                    Id = client.Id,
-                    FirstName = client.FirstName
+                    Id = employee.Id,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    MiddleName = employee.MiddleName,
+                    Phone = employee.Phone
                 };
             }
         }

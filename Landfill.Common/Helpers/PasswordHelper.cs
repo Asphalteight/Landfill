@@ -1,8 +1,7 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Landfill.Helpers
+namespace Landfill.Common.Helpers
 {
     public static class PasswordHelper
     {
@@ -13,7 +12,7 @@ namespace Landfill.Helpers
 
             var generator = RandomNumberGenerator.Create();
             generator.GetBytes(salt);
- 
+
             return Convert.ToBase64String(salt);
         }
 

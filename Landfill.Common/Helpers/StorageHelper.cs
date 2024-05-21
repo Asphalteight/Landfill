@@ -1,9 +1,7 @@
-﻿using System.IO;
-using System.IO.IsolatedStorage;
+﻿using System.IO.IsolatedStorage;
 using System.Security.Principal;
-using System.Threading;
 
-namespace Landfill.Helpers
+namespace Landfill.Common.Helpers
 {
     public static class StorageHelper
     {
@@ -35,8 +33,8 @@ namespace Landfill.Helpers
         {
             var isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
             var writer = new StreamWriter(new IsolatedStorageFileStream(FileName, FileMode.OpenOrCreate, isolatedStorage));
-            
-            writer.WriteLine($"{userName}-Stored at {System.DateTime.Now}");
+
+            writer.WriteLine($"{userName}-Stored at {DateTime.Now}");
             writer.Flush();
             writer.Close();
 

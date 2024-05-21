@@ -1,7 +1,7 @@
 ﻿using Landfill.Abstractions;
+using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
-using Landfill.Helpers;
 using Landfill.MVVM.Models;
 using Landfill.Services;
 using System.Linq;
@@ -63,7 +63,7 @@ namespace Landfill.MVVM.ViewModels
 
             StorageHelper.SetUser(user.Login);
 
-            RunCommand(x => Navigation.NavigateTo<ClientViewModel>());
+            RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>());
         }
     }
 }
