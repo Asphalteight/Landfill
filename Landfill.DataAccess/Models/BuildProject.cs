@@ -30,6 +30,11 @@ namespace Landfill.DataAccess.Models
         public string Address { get; set; }
 
         /// <summary>
+        /// Дата начала работ
+        /// </summary>
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
         /// Планируемая дата окончания работ
         /// </summary>
         public DateTime PlanningCompletionDate { get; set; }
