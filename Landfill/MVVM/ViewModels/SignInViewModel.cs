@@ -1,4 +1,5 @@
 ﻿using Landfill.Abstractions;
+using Landfill.Common.Enums;
 using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
@@ -63,7 +64,7 @@ namespace Landfill.MVVM.ViewModels
 
             StorageHelper.SetUser(user.Login);
 
-            RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>());
+            RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>(obj, WindowTypeEnum.Main));
         }
     }
 }

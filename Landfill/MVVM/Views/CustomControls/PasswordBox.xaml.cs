@@ -6,16 +6,16 @@ using System.Windows.Controls;
 namespace Landfill.MVVM.Views.CustomControls
 {
     /// <summary>
-    /// Interaction logic for CustomPasswordBox.xaml
+    /// Interaction logic for PasswordBox.xaml
     /// </summary>
-    public partial class CustomPasswordBox : UserControl
+    public partial class PasswordBox : UserControl
     {
         public static readonly DependencyProperty PasswordProperty = 
-            DependencyProperty.Register("Password", typeof(string), typeof(CustomPasswordBox),
+            DependencyProperty.Register("Password", typeof(string), typeof(PasswordBox),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PasswordChanged, null, false, System.Windows.Data.UpdateSourceTrigger.PropertyChanged));
 
         public static readonly DependencyProperty IsPasswordVisibleProperty =
-            DependencyProperty.Register("IsPasswordVisible", typeof(bool), typeof(CustomPasswordBox),
+            DependencyProperty.Register("IsPasswordVisible", typeof(bool), typeof(PasswordBox),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ShowPasswordChanged, null, false, System.Windows.Data.UpdateSourceTrigger.PropertyChanged));
 
         public string Password
@@ -30,7 +30,7 @@ namespace Landfill.MVVM.Views.CustomControls
             set { SetValue(IsPasswordVisibleProperty, value); }
         }
 
-        public CustomPasswordBox()
+        public PasswordBox()
         {
             InitializeComponent();
             textPasswordHidden.PasswordChanged += (o, s) => OnPasswordChanged();
@@ -44,7 +44,7 @@ namespace Landfill.MVVM.Views.CustomControls
 
         private static void ShowPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is CustomPasswordBox passwordBox)
+            if (d is PasswordBox passwordBox)
             {
                 passwordBox.ChangePasswordVisibility((bool)e.NewValue);
             }
@@ -52,7 +52,7 @@ namespace Landfill.MVVM.Views.CustomControls
 
         private static void PasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is CustomPasswordBox passwordBox && !(e.NewValue as string).IsNullOrWhiteSpace())
+            if (d is PasswordBox passwordBox && !(e.NewValue as string).IsNullOrWhiteSpace())
             {
                 passwordBox.SetPasswordBoxes(e.NewValue as string);
             }
@@ -78,7 +78,10 @@ namespace Landfill.MVVM.Views.CustomControls
         {
             textPassword.Text = password;
             textPasswordHidden.Password = password;
-            textPasswordHidden.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(textPasswordHidden, new object[] { Password.Length, 0 });
+            if (Password?.Length > 0)
+            {
+                textPasswordHidden.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(textPasswordHidden, new object[] { Password.Length, 0 });
+            }
         }
     }
 }

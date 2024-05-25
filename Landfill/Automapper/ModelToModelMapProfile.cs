@@ -13,6 +13,8 @@ namespace Landfill.Automapper
                 .ForMember(x => x.Position, m => m.MapFrom(x => "Сотрудник"));
 
             CreateMap<CredentialsModel, CredentialsModel>();
+
+            CreateMap<BuildProject, BuildingProjectModel>();
         }
     }
 }

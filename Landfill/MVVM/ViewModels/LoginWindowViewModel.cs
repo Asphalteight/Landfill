@@ -3,17 +3,17 @@ using Landfill.Services;
 
 namespace Landfill.MVVM.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class LoginWindowViewModel : ViewModelBase
     {
         private INavigationService _navigation;
  
         public INavigationService Navigation { get => _navigation; set { _navigation = value; OnPropertyChanged(); } }
 
-        public MainWindowViewModel(INavigationService navigation)
+        public LoginWindowViewModel(INavigationService navigation)
         {
             _navigation = navigation;
 
-            RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>());
+            RunCommand(x => Navigation.NavigateTo<SignInViewModel>());
         }
     }
 }

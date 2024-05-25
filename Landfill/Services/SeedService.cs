@@ -4,7 +4,6 @@ using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +12,6 @@ namespace Landfill.Services
     public class SeedService : IHostedService
     {
         private readonly IDbContext _dbContext;
-        private const string Admin = "admin";
 
         public SeedService(IDbContext dbContext)
         {
@@ -25,21 +23,22 @@ namespace Landfill.Services
             SeedUserAccounts();
 
             _dbContext.SaveChanges();
+
             return Task.CompletedTask;
         }
 
-        private void SeedUserAccounts()
+        private Task SeedUserAccounts()
         {
-            var userAccount = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == Admin);
-            if (userAccount == null)
-            {
-                var salt = PasswordHelper.GenerateSalt();
+            var salt = new[] { PasswordHelper.GenerateSalt(), PasswordHelper.GenerateSalt() };
+            var login = new[] { "admin", "user1" };
 
-                userAccount = new UserAccount
+            var userAccounts = new UserAccount[]
+            {
+                new()
                 {
-                    Login = Admin,
-                    Salt = salt,
-                    PasswordHash = Admin.GetHash(salt),
+                    Login = login[0],
+                    Salt = salt[0],
+                    PasswordHash = login[0].GetHash(salt[0]),
                     Employee = new Employee
                     {
                         FirstName = "Олег",
@@ -47,25 +46,44 @@ namespace Landfill.Services
                         MiddleName = "Петрович",
                         Phone = "+77778888888",
                         Position = "Директор"
-                    }
-                };
-                userAccount.Roles.Add(new RoleToUser { Role = RoleEnum.Admin });
-
-                _dbContext.Add(userAccount);
+                    },
+                    Roles = [
+                        new() { Role = RoleEnum.Employee },
+                        new() { Role = RoleEnum.Manager },
+                        new() { Role = RoleEnum.Admin }
+                    ]
+                },
+                new()
+                {
+                    Login = login[1],
+                    Salt = salt[1],
+                    PasswordHash = login[1].GetHash(salt[1]),
+                    Employee = new Employee
+                    {
+                        FirstName = "Николай",
+                        LastName = "Некрасов",
+                        MiddleName = "Максимович",
+                        Phone = "+77777777777",
+                        Position = "Сотрудник"
+                    },
+                    Roles = [ new() { Role = RoleEnum.Employee } ]
+                }
+            };
+            
+            foreach (var account in userAccounts)
+            {
+                _dbContext.Add(account);
             }
 
-            SeedBuildProjects(userAccount);
+            SeedBuildProjects(userAccounts);
+            return Task.CompletedTask;
         }
 
-        private void SeedBuildProjects(UserAccount userAccount)
+        private Task SeedBuildProjects(UserAccount[] userAccounts)
         {
-            var projectName = "Строительный проект детской площадки";
-
-            var project = _dbContext.QuerySet<BuildProject>().FirstOrDefault(x => x.Name == projectName);
-            if (project == null)
+            var projects = new BuildProject[]
             {
-                project = new BuildProject
-                {
+                new() {
                     Name = "Строительный проект детской площадки",
                     Address = "г. Симферополь, ул. Рандомная, д. 1",
                     Price = 5000000,
@@ -73,14 +91,78 @@ namespace Landfill.Services
                     PlanningCompletionDate = DateTime.Now.AddYears(1),
                     State = ProjectStateEnum.Created,
                     Members = [
-                    new ProjectMember { FirstName = "Василий", LastName = "Морозов", MiddleName = "Сергеевич", Phone = "+79998888888" },
+                        new ProjectMember { FirstName = "Илья", LastName = "Киреев", MiddleName = "Петрович", Phone = "+79998888888" },
                         new ProjectMember { FirstName = "Владислав", LastName = "Владов", MiddleName = "Дмитриевич", Phone = "+72222222222" }
                     ],
-                    Employee = userAccount.Employee
-                };
+                    Employee = userAccounts[0].Employee
+                },
+                new() {
+                    Name = "Строительный проект по возведению здания государственного управления Республики Крым",
+                    Address = "г. Севастополь, ул. Иванова, д. 10",
+                    Price = 700000000,
+                    Customer = "ООО \"Новое время\"",
+                    PlanningCompletionDate = new DateTime(2026, 2, 5),
+                    State = ProjectStateEnum.InProgress,
+                    Members = [
+                        new ProjectMember { FirstName = "Сергей", LastName = "Петров", MiddleName = "Иванович", Phone = "+79998888888" },
+                        new ProjectMember { FirstName = "Владимир", LastName = "Гидров", MiddleName = "Николаевич", Phone = "+72222222222" },
+                        new ProjectMember { FirstName = "Максим", LastName = "Цукунберг", MiddleName = "Джекович", Phone = "+72222222222" },
+                        new ProjectMember { FirstName = "Виктор", LastName = "Петрович", MiddleName = "Баринов", Phone = "+72222222222" },
+                    ],
+                    Employee = userAccounts[0].Employee
+                },
+                new() {
+                    Name = "Строительство жилого дома",
+                    Address = "г. Алушта, ул. Гагарина, д. 131",
+                    Price = 3000000,
+                    Customer = "ИП \"Сергеев\"",
+                    PlanningCompletionDate = new DateTime(2024, 9, 12),
+                    State = ProjectStateEnum.Created,
+                    Members = [
+                        new ProjectMember { FirstName = "Егор", LastName = "Матвеев", MiddleName = "Владимирович", Phone = "+79998888888" },
+                        new ProjectMember { FirstName = "Николай", LastName = "Андреев", MiddleName = "Андреевич", Phone = "+72222222222" },
+                    ],
+                    Employee = userAccounts[1].Employee
+                },
+                new() {
+                    Name = "Строительный проект школы",
+                    Address = "г. Симферополь, ул. Фрунзе, д. 142",
+                    Price = 200000000,
+                    Customer = "ООО \"ГлобалЗастройщик\"",
+                    StartDate = new DateTime(2023, 1, 5),
+                    PlanningCompletionDate = new DateTime(2024, 5, 22),
+                    CompletionDate = new DateTime(2024, 5, 22),
+                    State = ProjectStateEnum.Done,
+                    Members = [
+                        new ProjectMember { FirstName = "Василий", LastName = "Хлебов", MiddleName = "Сергеевич", Phone = "+79998888888" },
+                        new ProjectMember { FirstName = "Тимофей", LastName = "Тимьянов", MiddleName = "Максимович", Phone = "+72222222222" },
+                        new ProjectMember { FirstName = "Михаил", LastName = "Полевой", MiddleName = "Дмитриевич", Phone = "+72222222222" }
+                    ],
+                    Employee = userAccounts[0].Employee
+                },
+                new() {
+                    Name = "Строительный проект детского садика",
+                    Address = "г. Симферополь, ул. Сергеева Ценского, д. 41",
+                    Price = 1000000000,
+                    Customer = "ООО \"Строитель\"",
+                    StartDate = new DateTime(2024, 3, 1),
+                    PlanningCompletionDate = new DateTime(2025, 4, 5),
+                    State = ProjectStateEnum.InProgress,
+                    Members = [
+                        new ProjectMember { FirstName = "Данил", LastName = "Никифиоров", MiddleName = "Егорович", Phone = "+79998888888" },
+                        new ProjectMember { FirstName = "Евгений", LastName = "Зеленый", MiddleName = "Иванович", Phone = "+72222222222" }
+                    ],
+                    Employee = userAccounts[0].Employee
+                }
 
+            };
+
+            foreach (var project in projects)
+            {
                 _dbContext.Add(project);
             }
+
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

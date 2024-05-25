@@ -3,11 +3,11 @@
 namespace Landfill.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindowView.xaml
+    /// Interaction logic for LoginWindowView.xaml
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class LoginWindowView : Window
     {
-        public MainWindowView()
+        public LoginWindowView()
         {
             InitializeComponent();
         }

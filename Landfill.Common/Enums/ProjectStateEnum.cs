@@ -1,4 +1,6 @@
-﻿namespace Landfill.Common.Enums
+﻿using System.ComponentModel;
+
+namespace Landfill.Common.Enums
 {
     /// <summary>
     /// Статус проекта
@@ -8,16 +10,19 @@
         /// <summary>
         /// Создан
         /// </summary>
+        [Description("Создан")]
         Created = 0,
 
         /// <summary>
         /// В работе
         /// </summary>
+        [Description("В работе")]
         InProgress = 1,
 
         /// <summary>
         /// Завершен
         /// </summary>
+        [Description("Завершен")]
         Done = 2
     }
 }
