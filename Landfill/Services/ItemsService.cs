@@ -5,11 +5,11 @@ namespace Landfill.Services
 {
     public interface IItemsService
     {
-        public ObservableCollection<BuildingProjectModel> Items { get; set; }
+        public ObservableCollection<BuildProjectModel> Items { get; set; }
     }
 
     public class ItemsService : IItemsService
     {
-        public ObservableCollection<BuildingProjectModel> Items { get ; set; }
+        public ObservableCollection<BuildProjectModel> Items { get ; set; }
     }
 }

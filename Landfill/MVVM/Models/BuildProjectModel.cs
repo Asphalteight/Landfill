@@ -6,7 +6,7 @@ namespace Landfill.MVVM.Models
     /// <summary>
     /// Модель для строительного проекта
     /// </summary>
-    public class BuildingProjectModel
+    public class BuildProjectModel
     {
         /// <summary>
         /// Идентификатор проекта

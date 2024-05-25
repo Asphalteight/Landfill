@@ -10,7 +10,7 @@
              Background="White"
              d:DataContext="{d:DesignInstance vm:BuildProjectCardViewModel, IsDesignTimeCreatable=True}">
 
-    <ContentPresenter ContentTemplate="{StaticResource BuildingProjectTemplate}"
+    <ContentPresenter ContentTemplate="{StaticResource BuildProjectTemplate}"
                       Content="{Binding}" />
 
 </UserControl>

@@ -208,8 +208,8 @@
             </Style.Triggers>
         </Style>
 
-        <DataTemplate DataType="{x:Type model:BuildingProjectModel}"
-                      x:Key="BuildingProjectTemplate">
+        <DataTemplate DataType="{x:Type model:BuildProjectModel}"
+                      x:Key="BuildProjectTemplate">
             <Border Margin="0 2 0 2"
                     BorderThickness="1"
                     BorderBrush="#027E77"
@@ -354,7 +354,7 @@
                                Width="169"
                                Height="25"
                                Margin="425,10,0,0" />
-                    <Button Content="Подробнее >>"
+                    <Button Content="Редактировать >>"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left"
                             Width="125"

@@ -14,7 +14,7 @@ namespace Landfill.Automapper
 
             CreateMap<CredentialsModel, CredentialsModel>();
 
-            CreateMap<BuildProject, BuildingProjectModel>();
+            CreateMap<BuildProject, BuildProjectModel>();
         }
     }
 }
