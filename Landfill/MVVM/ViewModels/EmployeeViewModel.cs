@@ -23,30 +23,28 @@ namespace Landfill.MVVM.ViewModels
         private readonly IMapper _mapper;
         private EmployeeInfoModel _currentUser;
         private INavigationService _navigation;
-        private ObservableCollection<BuildProjectModel> _items;
-        private int _selectedItemIndex = -1;
         private string _searchText;
         private DateTime _lastSearchTextPressedAt;
 
         public EmployeeInfoModel CurrentUser { get => _currentUser; set { _currentUser = value; OnPropertyChanged(); } }
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
-        public ObservableCollection<BuildProjectModel> Items { get => _items; set { _items = value; OnPropertyChanged(); } }
-        public int SelectedItemIndex { get => _selectedItemIndex; set { _selectedItemIndex = value; OnPropertyChanged(); RunCommand(ItemSelectedCommand); } }
         public string SearchText { get => _searchText; set { _searchText = value; OnPropertyChanged(); OnSearchTextChanged(); } }
-
+        
+        public IItemsService ItemsService { get; set; }
         public ICommand LogoutCommand { get; }
-        public ICommand ItemSelectedCommand { get; }
+        public ICommand NewBuildProjectCommand { get; }
 
         #endregion
 
-        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper)
+        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper, IItemsService itemsService)
         {
             _navigation = navigation;
             _dbContext = dbContext;
             _mapper = mapper;
+            ItemsService = itemsService;
 
             LogoutCommand = new ViewModelCommand(ExecuteLogoutCommand);
-            ItemSelectedCommand = new ViewModelCommand(ExecuteItemSelectedCommand);
+            NewBuildProjectCommand = new ViewModelCommand(ExecuteNewBuildProjectCommand);
 
             UpdateCurrentUser();
             UpdateItems();
@@ -66,7 +64,7 @@ namespace Landfill.MVVM.ViewModels
         private void UpdateItems()
         {
             var projects = _dbContext.QuerySet<BuildProject>().ToList();
-            Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(projects);
+            ItemsService.Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(projects);
         }
 
         private void ExecuteLogoutCommand(object obj)
@@ -74,11 +72,6 @@ namespace Landfill.MVVM.ViewModels
             StorageHelper.ResetStoredUser();
 
             RunCommand(x => Navigation.NavigateTo<SignInViewModel>(obj, WindowTypeEnum.Login));
-        }
-
-        private void ExecuteItemSelectedCommand(object obj)
-        {
-
         }
 
         private void OnSearchTextChanged()
@@ -106,7 +99,12 @@ namespace Landfill.MVVM.ViewModels
                 x.Address.Contains(SearchText) ||
                 x.Customer.Contains(SearchText)).ToList();
 
-            Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(searchResult);
+            ItemsService.Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(searchResult);
+        }
+
+        private void ExecuteNewBuildProjectCommand(object obj)
+        {
+            
         }
     }
 }

@@ -4,14 +4,15 @@ using System.Windows.Data;
 
 namespace Landfill.Converters
 {
-    public class DateOnlyStringConverter : IValueConverter
+    public class DateTimeToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var result = "";
             if (value != null)
             {
-                result = ((DateTime)value).Date.ToShortDateString();
+                var dateTime = (DateTime)value;
+                result = dateTime.ToString("dd.MM.yyyy в HH:mm:ss"); 
             }
             return result;
         }

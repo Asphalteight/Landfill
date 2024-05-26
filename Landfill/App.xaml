@@ -6,8 +6,12 @@
              xmlns:model="clr-namespace:Landfill.MVVM.Models"
              xmlns:converters="clr-namespace:Landfill.Converters">
     
+    <!--Ресурсы-->
     
     <Application.Resources>
+        
+        <!--Шаблоны представлений и их моделей-->
+        
         <DataTemplate DataType="{x:Type viewModel:SignInViewModel}">
             <view:SignInView />
         </DataTemplate>
@@ -28,14 +32,6 @@
             <view:SignUpSetEmployeeView />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:MenuSettingsViewModel}">
-            <view:MenuSettingsView />
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewModel:MenuListProjectsViewModel}">
-            <view:MenuListProjectsView />
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModel:BuildProjectViewModel}">
             <view:BuildProjectView />
         </DataTemplate>
@@ -48,11 +44,21 @@
             <view:MainWindowView />
         </DataTemplate>
 
+        <!--Конвертеры-->
+        
         <converters:EnumToStringConverter x:Key="EnumValueToStringConverter" />
         <converters:DateOnlyStringConverter x:Key="DateOnlyStringConverter" />
         <converters:ProjectNumberConverter x:Key="ProjectNumberConverter" />
         <converters:CountToVisibleConverter x:Key="CountToVisibleConverter" />
+        <converters:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
+        <converters:PersonFullNameToInitialsConverter x:Key="PersonFullNameToInitialsConverter" />
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
 
+
+        <!--Стили-->
+
+        <!--Стиль кликабельного текстового блока -->
+        
         <Style x:Key="HoverUnderlineStyle"
                TargetType="TextBlock">
             <Style.Triggers>
@@ -66,45 +72,15 @@
             </Style.Triggers>
         </Style>
 
+        <!--Стиль кнопки-->
+        
         <Style x:Key="{x:Type Button}"
                TargetType="{x:Type Button}">
             <Setter Property="Button.Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border"
-                                Background="#027E77"
-                                CornerRadius="20">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled"
-                                     Value="false">
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="#B1E1EC" />
-                                <Setter Property="Foreground"
-                                        Value="#667275" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter Property="Opacity"
-                                        Value="0.8" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ButtonRound10Style"
-               BasedOn="{StaticResource {x:Type Button}}"
-               TargetType="Button">
-            <Setter Property="Button.Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                Background="#027E77"
+                                Background="#8FC9B8"
                                 CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
@@ -129,6 +105,42 @@
             </Setter>
         </Style>
 
+        <!--Стиль кнопки красной-->
+
+        <Style x:Key="ButtonRoundedRed"
+               BasedOn="{StaticResource {x:Type Button}}"
+               TargetType="Button">
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="#EB5F49"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#B1E1EC" />
+                                <Setter Property="Foreground"
+                                        Value="#667275" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Opacity"
+                                        Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Стиль текст бокса-->
+        
         <Style x:Key="{x:Type TextBox}"
                TargetType="{x:Type TextBox}">
             <Style.Resources>
@@ -139,6 +151,8 @@
             </Style.Resources>
         </Style>
 
+        <!--Стиль пассворд бокса-->
+        
         <Style x:Key="{x:Type PasswordBox}"
                TargetType="{x:Type PasswordBox}">
             <Setter Property="PasswordChar"
@@ -208,15 +222,182 @@
             </Style.Triggers>
         </Style>
 
+        <!--Стиль списка-->
+
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="Bd"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Стиль полосы прокрутки Thumbs-->
+        
+        <Style x:Key="ScrollThumbs"
+               TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       Width="Auto"
+                                       Height="Auto"
+                                       Fill="Transparent" />
+                            <Border x:Name="Rectangle1"
+                                    CornerRadius="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Width="Auto"
+                                    Height="Auto"
+                                    Background="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag"
+                                     Value="Horizontal">
+                                <Setter TargetName="Rectangle1"
+                                        Property="Width"
+                                        Value="Auto" />
+                                <Setter TargetName="Rectangle1"
+                                        Property="Height"
+                                        Value="7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Стиль полосы прокрутки Scrollbar-->
+        
+        <Style x:Key="{x:Type ScrollBar}"
+               TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled"
+                    Value="false" />
+            <Setter Property="Foreground"
+                    Value="#8FC9B8" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Width"
+                    Value="8" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot"
+                              Width="8"
+                              Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.00001*" />
+                            </Grid.RowDefinitions>
+                            <Track x:Name="PART_Track"
+                                   Grid.Row="0"
+                                   IsDirectionReversed="true"
+                                   Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb"
+                                           Background="{TemplateBinding Foreground}"
+                                           Style="{DynamicResource ScrollThumbs}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp"
+                                                  Command="ScrollBar.PageDownCommand"
+                                                  Opacity="0"
+                                                  Focusable="false" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown"
+                                                  Command="ScrollBar.PageUpCommand"
+                                                  Opacity="0"
+                                                  Focusable="false" />
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="Thumb"
+                                     Property="IsMouseOver"
+                                     Value="true">
+                                <Setter Value="{DynamicResource ButtonSelectBrush}"
+                                        TargetName="Thumb"
+                                        Property="Background" />
+                            </Trigger>
+                            <Trigger SourceName="Thumb"
+                                     Property="IsDragging"
+                                     Value="true">
+                                <Setter Value="{DynamicResource DarkBrush}"
+                                        TargetName="Thumb"
+                                        Property="Background" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter TargetName="Thumb"
+                                        Property="Visibility"
+                                        Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="Orientation"
+                                     Value="Horizontal">
+                                <Setter TargetName="GridRoot"
+                                        Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track"
+                                        Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width"
+                                        Value="Auto" />
+                                <Setter Property="Height"
+                                        Value="8" />
+                                <Setter TargetName="Thumb"
+                                        Property="Tag"
+                                        Value="Horizontal" />
+                                <Setter TargetName="PageDown"
+                                        Property="Command"
+                                        Value="ScrollBar.PageLeftCommand" />
+                                <Setter TargetName="PageUp"
+                                        Property="Command"
+                                        Value="ScrollBar.PageRightCommand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Шаблоны моделей с данными-->
+
+        <!--Шаблон для карточки строительного проекта-->
+
         <DataTemplate DataType="{x:Type model:BuildProjectModel}"
                       x:Key="BuildProjectTemplate">
-            <Border Margin="0 2 0 2"
+            <Border Margin="-2 2 0 2"
                     BorderThickness="1"
-                    BorderBrush="#027E77"
+                    BorderBrush="#8FC9B8"
                     Height="200"
                     Width="600"
-                    CornerRadius="2"
-                    Background="#EEFAF6">
+                    CornerRadius="2">
                 <Grid>
                     <TextBlock Text="Наименование"
                                Foreground="#92A9A0"
@@ -303,7 +484,7 @@
                                FontSize="9"
                                Width="72"
                                Height="16"
-                               Margin="523,118,0,0" />
+                               Margin="523,162,0,0" />
                     <TextBlock Text="{Binding State, Converter={StaticResource EnumValueToStringConverter}}"
                                Foreground="#05402A"
                                VerticalAlignment="Top"
@@ -313,7 +494,7 @@
                                FontSize="15"
                                Width="118"
                                Height="26"
-                               Margin="476,130,0,0" />
+                               Margin="476,176,0,0" />
                     <TextBlock Text="Планируемая дата окончания"
                                Foreground="#92A9A0"
                                VerticalAlignment="Top"
@@ -354,17 +535,156 @@
                                Width="169"
                                Height="25"
                                Margin="425,10,0,0" />
-                    <Button Content="Редактировать >>"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Width="125"
-                            Height="17"
-                            FontSize="9"
-                            Style="{StaticResource ButtonRound10Style}"
-                            Margin="468,175,0,0">
-                    </Button>
                 </Grid>
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Background"
+                                Value="#EEFAF6" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="#C8E1D9" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Background"
+                                        Value="#C8E1D9" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
             </Border>
         </DataTemplate>
+
+        <!--Шаблон для карточки участника проекта-->
+
+        <DataTemplate DataType="{x:Type model:ProjectMemberModel}"
+                      x:Key="ProjectMemberTemplate">
+            <Border Margin="-2 2 0 2"
+                    BorderThickness="1"
+                    BorderBrush="#8FC9B8"
+                    Height="100"
+                    Width="270"
+                    CornerRadius="2">
+                <Grid>
+                    <TextBlock Text="Имя"
+                               Foreground="#92A9A0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="8"
+                               Width="38"
+                               Height="12"
+                               Margin="138,2,0,0" />
+
+                    <TextBlock Text="{Binding FirstName}"
+                               Foreground="#05402A"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="12"
+                               Width="121"
+                               Height="16"
+                               Margin="145,12,0,0" />
+
+                    <TextBlock Text="Фамилия"
+                               Foreground="#92A9A0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="8"
+                               Width="36"
+                               Height="10"
+                               Margin="3,2,0,0" />
+
+                    <TextBlock Text="{Binding LastName}"
+                               Foreground="#05402A"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="12"
+                               Width="123"
+                               Height="16"
+                               Margin="10,12,0,0" />
+
+                    <TextBlock Text="Отчество"
+                               Foreground="#92A9A0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="8"
+                               Width="43"
+                               Height="16"
+                               Margin="3,33,0,0" />
+
+                    <TextBlock Text="{Binding MiddleName}"
+                               Foreground="#05402A"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="12"
+                               Width="128"
+                               Height="16"
+                               Margin="10,45,0,0" />
+
+                    <TextBlock Text="Номер телефона"
+                               Foreground="#92A9A0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               FontSize="8"
+                               Width="71"
+                               Height="10"
+                               Margin="3,72,0,0"
+                               RenderTransformOrigin="0.514,0.438" />
+
+                    <TextBlock Text="{Binding Phone}"
+                               Foreground="#05402A"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               FontSize="12"
+                               Width="87"
+                               Height="15"
+                               Margin="3,82,0,0" />
+
+                    <TextBlock Text="Заметки"
+                               Foreground="#92A9A0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               TextAlignment="Right"
+                               FontSize="8"
+                               Width="56"
+                               Height="10"
+                               Margin="210,36,0,0"
+                               RenderTransformOrigin="0.514,0.438" />
+
+                    <TextBlock Text="{Binding Description}"
+                               Foreground="#05402A"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextAlignment="Right"
+                               FontSize="9"
+                               Width="162"
+                               Height="47"
+                               Margin="104,50,0,0" />
+
+                </Grid>
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Background"
+                                Value="#EEFAF6" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="#C8E1D9" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+        </DataTemplate>
+        
     </Application.Resources>
 </Application>

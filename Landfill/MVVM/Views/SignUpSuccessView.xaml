@@ -16,7 +16,7 @@
                    HorizontalAlignment="Center"
                    Margin="0,180,0,0"
                    TextWrapping="Wrap"
-                   Foreground="#027E77"
+                   Foreground="#8FC9B8"
                    VerticalAlignment="Top"
                    Width="490" />
 
@@ -26,11 +26,11 @@
                    Margin="210,242,0,0"
                    TextAlignment="Center"
                    FontSize="15"
-                   Foreground="#027E77" />
+                   Foreground="#8FC9B8" />
 
         <Border CornerRadius="50"
                 Margin="520,238,55,236"
-                BorderBrush="#027E77"
+                BorderBrush="#8FC9B8"
                 BorderThickness="1"
                 Height="25"
                 Width="25">
@@ -39,7 +39,7 @@
                        TextAlignment="Center"
                        HorizontalAlignment="Center"
                        TextWrapping="Wrap"
-                       Foreground="#027E77"
+                       Foreground="#8FC9B8"
                        VerticalAlignment="Center" />
         </Border>
 

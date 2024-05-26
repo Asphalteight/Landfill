@@ -1,15 +1,9 @@
-﻿namespace Landfill.MVVM.Models
+﻿using Landfill.DataAccess.Models;
+
+namespace Landfill.MVVM.Models
 {
-    public class EmployeeInfoModel
+    public class EmployeeInfoModel : PersonModel
     {
         public int Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string Phone { get; set; }
     }
 }

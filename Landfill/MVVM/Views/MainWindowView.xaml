@@ -6,8 +6,8 @@
         xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
         mc:Ignorable="d"
         Title="Строительные проекты предприятия"
-        Height="720"
-        Width="1020"
+        Height="840"
+        Width="1520"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, IsDesignTimeCreatable=False}">
     <Grid>

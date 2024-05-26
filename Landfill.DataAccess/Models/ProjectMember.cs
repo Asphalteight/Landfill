@@ -3,7 +3,7 @@
     public class ProjectMember : PersonEntity<int>
     {
         /// <summary>
-        /// Комментарии
+        /// Заметки
         /// </summary>
         public string Description { get; set; }
 

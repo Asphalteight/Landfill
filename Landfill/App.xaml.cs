@@ -1,4 +1,5 @@
-﻿using Landfill.Abstractions;
+﻿using AutoMapper;
+using Landfill.Abstractions;
 using Landfill.Automapper;
 using Landfill.Common.Helpers;
 using Landfill.DataAccess;
@@ -8,6 +9,7 @@ using Landfill.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Markup;
@@ -37,8 +39,6 @@ namespace Landfill
             services.AddTransient<EmployeeViewModel>();
             services.AddTransient<SignUpSuccessViewModel>();
             services.AddTransient<SignUpSetEmployeeViewModel>();
-            services.AddTransient<MenuListProjectsViewModel>();
-            services.AddTransient<MenuSettingsViewModel>();
             services.AddTransient<BuildProjectViewModel>();
             services.AddTransient<LoginWindowViewModel>();
             services.AddTransient<MainWindowViewModel>();
@@ -61,6 +61,16 @@ namespace Landfill
         protected override void OnStartup(StartupEventArgs e)
         {
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+
+            try 
+            {
+                _serviceProvider.GetRequiredService<IMapper>().ConfigurationProvider.AssertConfigurationIsValid();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
 
             var currentUserName = StorageHelper.GetStoredUser();
             if (currentUserName != null)

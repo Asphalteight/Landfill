@@ -2,7 +2,8 @@
 {
     public enum WindowTypeEnum
     {
-        Login = 0,
-        Main = 1,
+        Login,
+        Main,
+        BuildProject
     }
 }

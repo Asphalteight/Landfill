@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Landfill.DataAccess.Models;
+using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace Landfill.Converters
 {
-    public class DateOnlyStringConverter : IValueConverter
+    public class PersonFullNameToInitialsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = "";
-            if (value != null)
+            var person = (PersonModel)value;
+            var initials = $"{person.LastName} {person.FirstName.FirstOrDefault()}.";
+            if (person.MiddleName != null)
             {
-                result = ((DateTime)value).Date.ToShortDateString();
+                initials += $" {person.MiddleName.FirstOrDefault()}.";
             }
-            return result;
+            return initials;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

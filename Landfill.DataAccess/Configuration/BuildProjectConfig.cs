@@ -19,6 +19,9 @@ namespace Landfill.DataAccess.Configuration
             builder.Property(x => x.State).IsRequired();
 
             builder.HasMany(x => x.Members).WithOne(x => x.BuildProject).HasForeignKey(x => x.BuildProjectId);
+
+            builder.Navigation(x => x.Employee).AutoInclude();
+            builder.Navigation(x => x.Members).AutoInclude();
         }
     }
 }
