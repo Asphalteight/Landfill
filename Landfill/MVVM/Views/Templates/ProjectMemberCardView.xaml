@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="100"
              d:DesignWidth="270"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:ProjectMemberCardViewModel, IsDesignTimeCreatable=True}">
 
     <ContentPresenter ContentTemplate="{StaticResource ProjectMemberTemplate}" Content="{Binding}"/>

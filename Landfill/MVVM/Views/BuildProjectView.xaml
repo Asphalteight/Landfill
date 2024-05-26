@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
              mc:Ignorable="d"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              Width="500"
              Height="710"
              d:DataContext="{d:DesignInstance vm:BuildProjectViewModel, IsDesignTimeCreatable=False}">
@@ -267,7 +267,7 @@
 
         <ListView ItemsSource="{Binding Path=CurrentItem.Members}"
                   ItemTemplate="{StaticResource ProjectMemberTemplate}"
-                  Background="AliceBlue"
+                  Background="#F3F8F9"
                   BorderBrush="#8FC9B8"
                   Width="300"
                   Height="225"

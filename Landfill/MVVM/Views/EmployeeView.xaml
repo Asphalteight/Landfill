@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              Height="800"
              Width="1500"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:EmployeeViewModel, IsDesignTimeCreatable=False}">
 
     <Grid>
@@ -34,7 +34,7 @@
         <ListView ItemsSource="{Binding Path=ItemsService.Items, UpdateSourceTrigger=PropertyChanged}"
                   ItemTemplate="{StaticResource BuildProjectTemplate}"
                   SelectedIndex="{Binding Path=ItemsService.SelectedItemIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                  Background="AliceBlue"
+                  Background="#F3F8F9"
                   BorderBrush="#8FC9B8"
                   Width="635"
                   Height="715"
@@ -55,12 +55,13 @@
 
         <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
+                 Background="#B2CCC4"
                  VerticalAlignment="Top"
                  Width="253"
-                 TextBlock.FontSize="16"
-                 Margin="70,10,0,0"
-                 Height="40"
-                 Padding="10 7 10 0" />
+                 FontSize="13"
+                 Margin="70,16,0,0"
+                 Height="28"
+                 Padding="10 4 10 0" />
 
         <TextBlock Text="Ничего не найдено"
                    Visibility="{Binding ItemsService.Items.Count, Converter={StaticResource CountToVisibleConverter}}"

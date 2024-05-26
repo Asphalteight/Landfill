@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              Height="500"
              Width="600"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:SignUpSuccessViewModel, IsDesignTimeCreatable=False}">
     <Grid>
         <TextBlock Text="Аккаунт успешно зарегистрирован"

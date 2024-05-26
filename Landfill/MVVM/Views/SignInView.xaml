@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              Height="500"
              Width="600"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:SignInViewModel, IsDesignTimeCreatable=False}">
 
     <Grid>
@@ -22,12 +22,13 @@
 
         <TextBox Text="{Binding Credentials.Login, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
+                 Background="#B2CCC4"
                  VerticalAlignment="Top"
-                 Width="312"
-                 TextBlock.FontSize="16"
-                 Margin="208,152,0,0"
-                 Height="40"
-                 Padding="10 7 10 0">
+                 Width="251"
+                 FontSize="13"
+                 Margin="210,159,0,0"
+                 Height="28"
+                 Padding="10 4 10 0">
         </TextBox>
 
         <TextBlock Text="{Binding ErrorMessage.Login}"
@@ -51,10 +52,10 @@
                             IsPasswordVisible="{Binding Credentials.ShowPassword}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Width="312"
-                            TextBlock.FontSize="16"
-                            Margin="210,218,0,0"
-                            Height="40">
+                            Width="251"
+                            FontSize="13"
+                            Margin="210,224,0,0"
+                            Height="28">
         </custom:PasswordBox>
 
         <TextBlock Text="{Binding ErrorMessage.Password}"

@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              Height="500"
              Width="600"
-             Background="AliceBlue"
+             Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:SignUpViewModel, IsDesignTimeCreatable=False}">
 
     <Grid>
@@ -25,12 +25,13 @@
 
         <TextBox Text="{Binding Credentials.Login, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
+                 Background="#B2CCC4"
                  VerticalAlignment="Top"
-                 Width="312"
-                 TextBlock.FontSize="16"
-                 Margin="216,101,0,0"
-                 Height="40"
-                 Padding="10 7 10 0" />
+                 Width="223"
+                 FontSize="13"
+                 Margin="216,107,0,0"
+                 Height="28"
+                 Padding="10 4 10 0" />
 
         <TextBlock Text="{Binding ErrorMessage.Login}"
                    HorizontalAlignment="Left"
@@ -56,10 +57,10 @@
                             IsPasswordVisible="{Binding Credentials.ShowPassword}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Width="312"
-                            TextBlock.FontSize="16"
-                            Margin="218,167,0,0"
-                            Height="40">
+                            Width="221"
+                            FontSize="13"
+                            Margin="218,173,0,0"
+                            Height="28">
         </custom:PasswordBox>
 
         <TextBlock Text="{Binding ErrorMessage.Password}"
@@ -75,9 +76,9 @@
         <TextBlock HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontSize="15"
-                   Margin="76,247,0,0"
+                   Margin="39,247,0,0"
                    TextWrapping="Wrap">
-            <Run Text="Повторите пароль" />
+            <Run Text="Подтверждение пароля" />
             <Run Text="*"
                  Foreground="Red" />
         </TextBlock>
@@ -86,10 +87,10 @@
                             IsPasswordVisible="{Binding Credentials.ShowPassword}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Width="312"
-                            TextBlock.FontSize="16"
-                            Margin="218,237,0,0"
-                            Height="40" />
+                            Width="221"
+                            FontSize="13"
+                            Margin="218,243,0,0"
+                            Height="28" />
 
         <TextBlock Text="{Binding ErrorMessage.PasswordDublicate}"
                    HorizontalAlignment="Left"
