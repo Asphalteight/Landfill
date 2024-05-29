@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Landfill.Abstractions;
 using Landfill.Common.Enums;
-using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
 using Landfill.MVVM.Models;
 using Landfill.Services;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -21,55 +19,47 @@ namespace Landfill.MVVM.ViewModels
 
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
-        private EmployeeInfoModel _currentUser;
         private INavigationService _navigation;
         private string _searchText;
         private DateTime _lastSearchTextPressedAt;
 
-        public EmployeeInfoModel CurrentUser { get => _currentUser; set { _currentUser = value; OnPropertyChanged(); } }
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
         public string SearchText { get => _searchText; set { _searchText = value; OnPropertyChanged(); OnSearchTextChanged(); } }
-        
+
         public IItemsService ItemsService { get; set; }
+        public IUserContextService UserContextService { get; set; }
         public ICommand LogoutCommand { get; }
         public ICommand NewBuildProjectCommand { get; }
+        public ICommand NavigateToEmployeeProfileCommand { get; }
+        public ICommand NavigateToEmployeesManagingCommand { get; }
 
         #endregion
 
-        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper, IItemsService itemsService)
+        public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper, IItemsService itemsService, IUserContextService userContextService)
         {
             _navigation = navigation;
             _dbContext = dbContext;
             _mapper = mapper;
             ItemsService = itemsService;
+            UserContextService = userContextService;
 
             LogoutCommand = new ViewModelCommand(ExecuteLogoutCommand);
             NewBuildProjectCommand = new ViewModelCommand(ExecuteNewBuildProjectCommand);
+            NavigateToEmployeeProfileCommand = new ViewModelCommand(x => Navigation.NavigateTo<EmployeeProfileViewModel>());
+            NavigateToEmployeesManagingCommand = new ViewModelCommand(x => Navigation.NavigateTo<EmployeesManagingViewModel>());
 
-            UpdateCurrentUser();
             UpdateItems();
-        }
-
-        private void UpdateCurrentUser()
-        {
-            var currentUserLogin = Thread.CurrentPrincipal?.Identity?.Name;
-
-            var employee = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == currentUserLogin)?.Employee;
-            if (employee != null)
-            {
-                CurrentUser = _mapper.Map<EmployeeInfoModel>(employee);
-            }
         }
 
         private void UpdateItems()
         {
             var projects = _dbContext.QuerySet<BuildProject>().ToList();
-            ItemsService.Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(projects);
+            ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(projects);
         }
 
         private void ExecuteLogoutCommand(object obj)
         {
-            StorageHelper.ResetStoredUser();
+            UserContextService.ResetStoredUser();
 
             RunCommand(x => Navigation.NavigateTo<SignInViewModel>(obj, WindowTypeEnum.Login));
         }
@@ -99,12 +89,13 @@ namespace Landfill.MVVM.ViewModels
                 x.Address.Contains(SearchText) ||
                 x.Customer.Contains(SearchText)).ToList();
 
-            ItemsService.Items = _mapper.Map<ObservableCollection<BuildProjectModel>>(searchResult);
+            ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(searchResult);
         }
 
         private void ExecuteNewBuildProjectCommand(object obj)
         {
-            
+            ItemsService.SelectedItemIndex = -1;
+            RunCommand(x => Navigation.NavigateItemPanelTo<BuildProjectAddNewViewModel>());
         }
     }
 }

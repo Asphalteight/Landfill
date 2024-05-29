@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Landfill.Abstractions;
 using Landfill.Automapper;
-using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.MVVM.ViewModels;
 using Landfill.MVVM.Views;
@@ -42,10 +41,19 @@ namespace Landfill
             services.AddTransient<BuildProjectViewModel>();
             services.AddTransient<LoginWindowViewModel>();
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<BuildProjectEditableViewModel>();
+            services.AddTransient<EmptyViewModel>();
+            services.AddTransient<BuildProjectAddNewViewModel>();
+            services.AddTransient<EmployeeProfileViewModel>();
+            services.AddTransient<EmployeesManagingViewModel>();
+            services.AddTransient<EmployeeInfoViewModel>();
+            services.AddTransient<EmployeeInfoEditableViewModel>();
 
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ICredentialsService, CredentialsService>();
+            services.AddSingleton<IUserContextService, UserContextService>();
             services.AddSingleton<IItemsService, ItemsService>();
+            services.AddSingleton<IEmployeeService, EmployeeService>();
 
             services.AddSingleton<Func<Type, ViewModelBase>>(provider => viewModel => (ViewModelBase)provider.GetRequiredService(viewModel));
             services.AddSingleton<Func<Type, Window>>(provider => view => (Window)provider.GetRequiredService(view));
@@ -72,8 +80,9 @@ namespace Landfill
                 throw;
             }
 
-            var currentUserName = StorageHelper.GetStoredUser();
-            if (currentUserName != null)
+            var userService = _serviceProvider.GetRequiredService<IUserContextService>();
+            userService.SetUserFromStored();
+            if (userService.CurrentUser != null)
             {
                 _serviceProvider.GetRequiredService<MainWindowView>().Show();
             }

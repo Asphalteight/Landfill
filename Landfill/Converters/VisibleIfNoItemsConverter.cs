@@ -5,11 +5,11 @@ using System.Windows.Data;
 
 namespace Landfill.Converters
 {
-    public class CountToVisibleConverter : IValueConverter
+    public class VisibleIfNoItemsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int?)value > 0 ? Visibility.Hidden : Visibility.Visible;
+            return (int?)value == 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

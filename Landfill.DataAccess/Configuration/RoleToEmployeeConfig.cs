@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Landfill.DataAccess.Configuration
 {
-    public class RoleToUserConfig : IEntityTypeConfiguration<RoleToUser>
+    public class RoleToEmployeeConfig : IEntityTypeConfiguration<RoleToEmployee>
     {
-        public void Configure(EntityTypeBuilder<RoleToUser> builder)
+        public void Configure(EntityTypeBuilder<RoleToEmployee> builder)
         {
-            builder.ToTable("RolesToUsers");
+            builder.ToTable("RolesToEmployees");
 
             builder.Property(x => x.Role).IsRequired();
         }

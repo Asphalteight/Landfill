@@ -65,7 +65,7 @@ namespace Landfill.MVVM.ViewModels
                 Salt = salt,
                 Employee = _mapper.Map<Employee>(EmployeeInfo)
             };
-            user.Roles.Add(new RoleToUser { Role = RoleEnum.Employee });
+            user.Employee.Roles.Add(new RoleToEmployee { Role = RoleEnum.Employee });
 
             _dbContext.Add(user);
             _dbContext.SaveChanges();

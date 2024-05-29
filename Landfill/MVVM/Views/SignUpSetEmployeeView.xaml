@@ -95,6 +95,7 @@
 
         <Button Command="{Binding SignUpCommand}"
                 Content="Зарегистрироваться"
+                Background="#8FC9B8"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
                 Margin="0,370,0,0"

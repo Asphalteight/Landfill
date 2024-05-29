@@ -82,6 +82,7 @@
         <Button Command="{Binding LoginCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                 Content="Вход"
+                Background="#8FC9B8"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
                 Margin="0,380,0,0"

@@ -17,6 +17,7 @@ namespace Landfill.MVVM.ViewModels
         private readonly IDbContext _dbContext;
         private ErrorMessageModel _errorMessage = new();
         private INavigationService _navigation;
+        private readonly IUserContextService _userContextService;
 
         public ErrorMessageModel ErrorMessage { get => _errorMessage; set { _errorMessage = value; OnPropertyChanged(); } }
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
@@ -26,10 +27,11 @@ namespace Landfill.MVVM.ViewModels
 
         #endregion
 
-        public SignInViewModel(INavigationService navigation, IDbContext dbContext)
+        public SignInViewModel(INavigationService navigation, IDbContext dbContext, IUserContextService userContextService)
         {
             Navigation = navigation;
             _dbContext = dbContext;
+            _userContextService = userContextService;
 
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             NavigateToSignUpCommand = new ViewModelCommand(x => Navigation.NavigateTo<SignUpViewModel>());
@@ -62,7 +64,7 @@ namespace Landfill.MVVM.ViewModels
                 return;
             }
 
-            StorageHelper.SetUser(user.Login);
+            _userContextService.SetUser(user.Login);
 
             RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>(obj, WindowTypeEnum.Main));
         }

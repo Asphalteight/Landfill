@@ -11,5 +11,11 @@ namespace Landfill.MVVM.Views
         {
             InitializeComponent();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listView = (ListView)sender;
+            listView.ScrollIntoView(listView.SelectedItem);
+        }
     }
 }

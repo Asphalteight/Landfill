@@ -3,9 +3,9 @@
 namespace Landfill.DataAccess.Models
 {
     /// <summary>
-    /// Роль пользователя
+    /// Роль сотрудника
     /// </summary>
-    public class RoleToUser : BaseEntity<int>
+    public class RoleToEmployee : BaseEntity<int>
     {
         /// <summary>
         /// Роль
@@ -13,13 +13,13 @@ namespace Landfill.DataAccess.Models
         public RoleEnum Role { get; set; }
 
         /// <summary>
-        /// Идентификатор пользователя
+        /// Идентификатор сотрудника
         /// </summary>
-        public int UserAccountId { get; set; }
+        public int EmployeeId { get; set; }
 
         /// <summary>
-        /// Пользователь
+        /// Сотрудник
         /// </summary>
-        public UserAccount UserAccount { get; set; }
+        public Employee Employee { get; set; }
     }
 }

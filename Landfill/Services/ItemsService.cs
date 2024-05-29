@@ -1,13 +1,12 @@
 ﻿using Landfill.Abstractions;
 using Landfill.MVVM.Models;
 using Landfill.MVVM.ViewModels;
-using System.Collections.ObjectModel;
 
 namespace Landfill.Services
 {
     public interface IItemsService
     {
-        public ObservableCollection<BuildProjectModel> Items { get; set; }
+        public ObservableCollectionWithItemNotify<BuildProjectModel> Items { get; set; }
         public int SelectedItemIndex { get; set; }
     }
 
@@ -18,11 +17,10 @@ namespace Landfill.Services
         private readonly INavigationService _navigation;
         private int _selectedItemIndex;
         private int _previousItemIndex;
-        private ObservableCollection<BuildProjectModel> _items;
+        private ObservableCollectionWithItemNotify<BuildProjectModel> _items;
 
-        public int SelectedItemIndex { get { return _selectedItemIndex >= 0 ? _selectedItemIndex : 0; } set { _selectedItemIndex = value; SelectedItemChanged(); OnPropertyChanged(); } }
-        public int PreviousItemIndex { get { return _previousItemIndex >= 0 ? _previousItemIndex : 0; } set => _previousItemIndex = value; }
-        public ObservableCollection<BuildProjectModel> Items { get => _items; set { _items = value; ItemsChanged(); OnPropertyChanged(); } }
+        public int SelectedItemIndex { get => _selectedItemIndex; set { _selectedItemIndex = value; SelectedItemChanged(); OnPropertyChanged(); } }
+        public ObservableCollectionWithItemNotify<BuildProjectModel> Items { get => _items; set { _items = value; ItemsChanged(); OnPropertyChanged(); } }
 
         #endregion
 
@@ -31,43 +29,35 @@ namespace Landfill.Services
             _navigation = navigation;
         }
 
-        private void ItemsChanged()
+        public void ItemsChanged()
         {
-            foreach (var item in Items)
+            if (Items.Count > 0)
             {
-                item.EditCommand = new ViewModelCommand(ExecuteEditCommand);
-                item.RemoveCommand = new ViewModelCommand(ExecuteRemoveCommand);
+                SelectedItemIndex = 0;
+                Items[SelectedItemIndex].IsSelected = true;
+                RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
             }
-
-            SelectedItemIndex = 0;
-            Items[SelectedItemIndex].IsSelected = true;
-
-            RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
         }
 
         private void SelectedItemChanged()
         {
-            if (Items.Count < PreviousItemIndex)
+            if (Items.Count == 0 || SelectedItemIndex < 0)
             {
-                PreviousItemIndex = 0;
+                RunCommand(x => _navigation.NavigateItemPanelTo<EmptyViewModel>());
+                return;
             }
-            Items[PreviousItemIndex].IsSelected = false;
-            Items[SelectedItemIndex].IsSelected = true;
+            if (Items.Count > _previousItemIndex && _previousItemIndex >= 0)
+            {
+                Items[_previousItemIndex].IsSelected = false;
+            }
 
-            PreviousItemIndex = SelectedItemIndex;
+            if (SelectedItemIndex >= 0)
+            {
+                Items[SelectedItemIndex].IsSelected = true;
+                RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
+            }
 
-            RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
+            _previousItemIndex = SelectedItemIndex;
         }
-
-        private void ExecuteEditCommand(object obj)
-        {
-            
-        }
-
-        private void ExecuteRemoveCommand(object obj)
-        {
-            
-        }
-
     }
 }

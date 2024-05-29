@@ -8,11 +8,6 @@ namespace Landfill.DataAccess.Models
     public class Employee : PersonEntity<int>
     {
         /// <summary>
-        /// Должность
-        /// </summary>
-        public string Position { get; set; }
-
-        /// <summary>
         /// Аккаунт
         /// </summary>
         public UserAccount UserAccount { get; set; }
@@ -26,5 +21,10 @@ namespace Landfill.DataAccess.Models
         /// Созданные строительные проекты
         /// </summary>
         public List<BuildProject> BuildProjects { get; set; } = [];
+
+        /// <summary>
+        /// Роли сотрудника
+        /// </summary>
+        public List<RoleToEmployee> Roles { get; set; } = [];
     }
 }

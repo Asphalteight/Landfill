@@ -12,28 +12,20 @@
 
     <Grid>
         <Button Command="{Binding NewBuildProjectCommand}"
+                Visibility="{Binding UserContextService.Permissions.AddNewProjects, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Background="#8FC9B8"
                 Content="Добавить новый проект"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="1106,10,0,0"
+                Margin="969,12,0,0"
                 Height="28"
                 Width="288"
                 FontSize="13" />
 
-        <Button Command="{Binding LogoutCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                Content="Выйти"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="1408,10,0,0"
-                Height="28"
-                Width="82"
-                FontSize="13"
-                Background="Green" />
-
         <ListView ItemsSource="{Binding Path=ItemsService.Items, UpdateSourceTrigger=PropertyChanged}"
                   ItemTemplate="{StaticResource BuildProjectTemplate}"
                   SelectedIndex="{Binding Path=ItemsService.SelectedItemIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  SelectionChanged="ListView_SelectionChanged"
                   Background="#F3F8F9"
                   BorderBrush="#8FC9B8"
                   Width="635"
@@ -63,9 +55,8 @@
                  Height="28"
                  Padding="10 4 10 0" />
 
-        <TextBlock Text="Ничего не найдено"
-                   Visibility="{Binding ItemsService.Items.Count, Converter={StaticResource CountToVisibleConverter}}"
-                   Foreground="#92A9A0"
+        <TextBlock Text="Ни одного проекта не найдено"
+                   Visibility="{Binding ItemsService.Items.Count, Converter={StaticResource VisibleIfNoItemsConverter}}"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    TextAlignment="Center"
@@ -81,5 +72,46 @@
                           Height="715"
                           VerticalAlignment="Top"
                           HorizontalAlignment="Center" />
+
+        <Menu Height="35"
+              Width="160"
+              Background="#8FC9B8"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Margin="1334,12,0,0">
+
+            <MenuItem Header="{Binding UserContextService.CurrentUser.FirstName}"
+                      Style="{StaticResource MenuItemWithDropdownStyle}"
+                      Height="35"
+                      Width="160">
+                <MenuItem.Icon>
+                    <Image Source="/Landfill;component/Assets/Icons/user.png"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                </MenuItem.Icon>
+
+                <MenuItem Header="Мой профиль"
+                          Command="{Binding NavigateToEmployeeProfileCommand}"
+                          Height="35"
+                          Width="175"
+                          Style="{StaticResource SubMenuItemStyle}">
+                </MenuItem>
+
+                <MenuItem Header="Сотрудники"
+                          Command="{Binding NavigateToEmployeesManagingCommand}"
+                          Height="35"
+                          Width="175"
+                          Style="{StaticResource SubMenuItemStyle}">
+                </MenuItem>
+
+                <MenuItem Header="Выйти"
+                          Command="{Binding LogoutCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                          Height="35"
+                          Width="175"
+                          Style="{StaticResource SubMenuItemStyle}">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </UserControl>

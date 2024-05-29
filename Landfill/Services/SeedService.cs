@@ -20,66 +20,82 @@ namespace Landfill.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            SeedUserAccounts();
+            SeedEmployees();
 
             _dbContext.SaveChanges();
 
             return Task.CompletedTask;
         }
 
-        private Task SeedUserAccounts()
+        private Task SeedEmployees()
         {
-            var salt = new[] { PasswordHelper.GenerateSalt(), PasswordHelper.GenerateSalt() };
-            var login = new[] { "admin", "user1" };
+            var adminUser = new { LoginAndPassword = "user1", Salt = PasswordHelper.GenerateSalt() };
+            var managerUser = new { LoginAndPassword = "user2", Salt = PasswordHelper.GenerateSalt() };
+            var employeeUser = new { LoginAndPassword = "user3", Salt = PasswordHelper.GenerateSalt() };
 
-            var userAccounts = new UserAccount[]
+            var employees = new Employee[]
             {
                 new()
                 {
-                    Login = login[0],
-                    Salt = salt[0],
-                    PasswordHash = login[0].GetHash(salt[0]),
-                    Employee = new Employee
-                    {
-                        FirstName = "Олег",
-                        LastName = "Иванов",
-                        MiddleName = "Петрович",
-                        Phone = "+77778888888",
-                        Position = "Директор"
-                    },
+                    FirstName = "Олег",
+                    LastName = "Иванов",
+                    MiddleName = "Петрович",
+                    Phone = "+77778888888",
                     Roles = [
                         new() { Role = RoleEnum.Employee },
                         new() { Role = RoleEnum.Manager },
                         new() { Role = RoleEnum.Admin }
-                    ]
+                    ],
+                    UserAccount = new UserAccount
+                    {
+                        Login = adminUser.LoginAndPassword,
+                        Salt = adminUser.Salt,
+                        PasswordHash = adminUser.LoginAndPassword.GetHash(adminUser.Salt)
+                    }
                 },
                 new()
                 {
-                    Login = login[1],
-                    Salt = salt[1],
-                    PasswordHash = login[1].GetHash(salt[1]),
-                    Employee = new Employee
+                    FirstName = "Николай",
+                    LastName = "Некрасов",
+                    MiddleName = "Максимович",
+                    Phone = "+77777777777",
+                    Roles = [ 
+                        new() { Role = RoleEnum.Employee },
+                        new() { Role = RoleEnum.Manager }
+                    ],
+                    UserAccount = new UserAccount
                     {
-                        FirstName = "Николай",
-                        LastName = "Некрасов",
-                        MiddleName = "Максимович",
-                        Phone = "+77777777777",
-                        Position = "Сотрудник"
-                    },
-                    Roles = [ new() { Role = RoleEnum.Employee } ]
+                        Login = managerUser.LoginAndPassword,
+                        Salt = managerUser.Salt,
+                        PasswordHash = managerUser.LoginAndPassword.GetHash(managerUser.Salt) 
+                    }
+                },
+                new()
+                {
+                    FirstName = "Максим",
+                    LastName = "Белов",
+                    MiddleName = "Владиславович",
+                    Phone = "+75555555555",
+                    Roles = [ new() { Role = RoleEnum.Employee } ],
+                    UserAccount = new UserAccount
+                    {
+                        Login = employeeUser.LoginAndPassword,
+                        Salt = employeeUser.Salt,
+                        PasswordHash = employeeUser.LoginAndPassword.GetHash(employeeUser.Salt)
+                    }
                 }
             };
-            
-            foreach (var account in userAccounts)
+
+            foreach (var employee in employees)
             {
-                _dbContext.Add(account);
+                _dbContext.Add(employee);
             }
 
-            SeedBuildProjects(userAccounts);
+            SeedBuildProjects(employees);
             return Task.CompletedTask;
         }
 
-        private Task SeedBuildProjects(UserAccount[] userAccounts)
+        private Task SeedBuildProjects(Employee[] employees)
         {
             var projects = new BuildProject[]
             {
@@ -94,7 +110,7 @@ namespace Landfill.Services
                         new ProjectMember { FirstName = "Илья", LastName = "Киреев", MiddleName = "Петрович", Phone = "+79998888888" },
                         new ProjectMember { FirstName = "Владислав", LastName = "Владов", MiddleName = "Дмитриевич", Phone = "+72222222222" }
                     ],
-                    Employee = userAccounts[0].Employee
+                    Employee = employees[0]
                 },
                 new() {
                     Name = "Строительный проект по возведению здания государственного управления Республики Крым",
@@ -109,7 +125,7 @@ namespace Landfill.Services
                         new ProjectMember { FirstName = "Максим", LastName = "Цукунберг", MiddleName = "Джекович", Phone = "+72222222222" },
                         new ProjectMember { FirstName = "Виктор", LastName = "Петрович", MiddleName = "Баринов", Phone = "+72222222222" },
                     ],
-                    Employee = userAccounts[0].Employee
+                    Employee = employees[0]
                 },
                 new() {
                     Name = "Строительство жилого дома",
@@ -122,7 +138,7 @@ namespace Landfill.Services
                         new ProjectMember { FirstName = "Егор", LastName = "Матвеев", MiddleName = "Владимирович", Phone = "+79998888888" },
                         new ProjectMember { FirstName = "Николай", LastName = "Андреев", MiddleName = "Андреевич", Phone = "+72222222222" },
                     ],
-                    Employee = userAccounts[1].Employee
+                    Employee = employees[1]
                 },
                 new() {
                     Name = "Строительный проект школы",
@@ -138,7 +154,7 @@ namespace Landfill.Services
                         new ProjectMember { FirstName = "Тимофей", LastName = "Тимьянов", MiddleName = "Максимович", Phone = "+72222222222" },
                         new ProjectMember { FirstName = "Михаил", LastName = "Полевой", MiddleName = "Дмитриевич", Phone = "+72222222222" }
                     ],
-                    Employee = userAccounts[0].Employee
+                    Employee = employees[1]
                 },
                 new() {
                     Name = "Строительный проект детского садика",
@@ -152,7 +168,7 @@ namespace Landfill.Services
                         new ProjectMember { FirstName = "Данил", LastName = "Никифиоров", MiddleName = "Егорович", Phone = "+79998888888" },
                         new ProjectMember { FirstName = "Евгений", LastName = "Зеленый", MiddleName = "Иванович", Phone = "+72222222222" }
                     ],
-                    Employee = userAccounts[0].Employee
+                    Employee = employees[0]
                 }
 
             };

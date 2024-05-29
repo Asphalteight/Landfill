@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Landfill.DataAccess.Models
+﻿namespace Landfill.DataAccess.Models
 {
     /// <summary>
     /// Аккаунт пользователя
@@ -26,10 +24,5 @@ namespace Landfill.DataAccess.Models
         /// Сотрудник
         /// </summary>
         public Employee Employee { get; set; }
-
-        /// <summary>
-        /// Роли пользователя
-        /// </summary>
-        public List<RoleToUser> Roles { get; set; } = [];
     }
 }
