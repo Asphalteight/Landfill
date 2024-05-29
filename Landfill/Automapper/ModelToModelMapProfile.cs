@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Landfill.Common.Enums;
 using Landfill.DataAccess.Models;
 using Landfill.MVVM.Models;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Landfill.Automapper
             CreateMap<Employee, EmployeeInfoModel>()
                 .ForMember(x => x.IsNew, o => o.Ignore())
                 .ForMember(x => x.IsSelected, o => o.Ignore())
+                .ForMember(x => x.IsAdmin, o => o.MapFrom(x => x.Roles.Any(x => x.Role == RoleEnum.Admin)))
+                .ForMember(x => x.IsManager, o => o.MapFrom(x => x.Roles.Any(x => x.Role == RoleEnum.Manager)))
                 .ForMember(x => x.Roles, o => o.MapFrom(x => x.Roles.Select(x => x.Role)));
 
             CreateMap<EmployeeInfoModel, Employee>()

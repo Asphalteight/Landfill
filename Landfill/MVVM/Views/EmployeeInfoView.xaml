@@ -15,7 +15,7 @@
                     Margin="10,371,0,0"
                     Width="200"
                     Height="200">
-            <StackPanel Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"
+            <StackPanel Visibility="{Binding CurrentEmployee.IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Margin="0 0 0 10"
                         Orientation="Horizontal">
                 <Image Source="/Landfill;component/Assets/Icons/check.png"
@@ -27,7 +27,7 @@
                            Text="Администратор" />
             </StackPanel>
 
-            <StackPanel Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"
+            <StackPanel Visibility="{Binding CurrentEmployee.IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Orientation="Horizontal">
                 <Image Source="/Landfill;component/Assets/Icons/check.png"
                        Stretch="Uniform"

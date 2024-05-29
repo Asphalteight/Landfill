@@ -16,15 +16,12 @@ namespace Landfill.MVVM.ViewModels
     {
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
-        private bool _isAdmin;
-        private bool _isManager;
 
         public IEmployeeService EmployeeService { get; set; }
         public IUserContextService UserContext {  get; set; }
         public INavigationService Navigation {  get; set; }
         public EmployeeInfoModel CurrentEmployee { get; set; }
-        public bool IsAdmin { get => _isAdmin; set { _isAdmin = value; OnPropertyChanged(); } }
-        public bool IsManager { get => _isManager; set { _isManager = value; OnPropertyChanged(); } }
+        
 
         public ICommand SaveEmployeeCommand { get; }
 
@@ -50,9 +47,9 @@ namespace Landfill.MVVM.ViewModels
 
         private void LoadEmployee()
         {
-            CurrentEmployee = EmployeeService.Employees[EmployeeService.SelectedEmployeeIndex];
-            IsAdmin = CurrentEmployee.Roles.Any(x => x == RoleEnum.Admin);
-            IsManager = CurrentEmployee.Roles.Any(y => y == RoleEnum.Manager);
+            var employeeId = EmployeeService.Employees[EmployeeService.SelectedEmployeeIndex].Id;
+            var employee = _dbContext.QuerySet<Employee>().FirstOrDefault(x => x.Id == employeeId);
+            CurrentEmployee = _mapper.Map<EmployeeInfoModel>(employee);
 
             var selectedEmployee = EmployeeService.Employees[EmployeeService.SelectedEmployeeIndex];
             EmployeeService.CanEditEmployeeAdminRole = UserContext.Permissions.EditEmployeeAdminRole && selectedEmployee.Id != UserContext.CurrentUser.Id;
@@ -63,11 +60,11 @@ namespace Landfill.MVVM.ViewModels
         private void ExecuteSaveEmployeeCommand(object obj)
         {
             var roles = new List<RoleEnum>();
-            if (IsAdmin)
+            if (CurrentEmployee.IsAdmin)
             {
                 roles.Add(RoleEnum.Admin);
             }
-            if (IsManager)
+            if (CurrentEmployee.IsManager)
             {
                 roles.Add(RoleEnum.Manager);
             }
