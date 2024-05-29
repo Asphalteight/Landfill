@@ -372,6 +372,7 @@
         <Button Content="Удалить"
                 Background="#EB5F49"
                 Command="{Binding DeleteProjectCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Width="102"

@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Landfill.Abstractions;
+using Landfill.Common.Enums;
 using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
 using Landfill.MVVM.Models;
+using Landfill.MVVM.Views.CustomControls;
 using Landfill.Services;
 using System;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
@@ -133,11 +134,12 @@ namespace Landfill.MVVM.ViewModels
 
         private void ExecuteDeleteProjectCommand(object obj)
         {
-            var confirmation = MessageBox.Show("Подтвердите удаление проекта", "Подтверждение действия", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-            if (confirmation != MessageBoxResult.OK) 
+            var confirmation = new MessageBoxCustom("Вы уверены, что хотите удалить проект?", MessageType.Confirmation, MessageButtons.OkCancel, obj).ShowDialog();
+            if (!confirmation.Value)
             {
                 return;
             }
+
             var project = _dbContext.QuerySet<BuildProject>().FirstOrDefault(x => x.Id == CurrentItem.Id);
             _dbContext.Remove(project);
 

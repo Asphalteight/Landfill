@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Assets\Icons\check.png" />
     <None Remove="Assets\Icons\clock.png" />
+    <None Remove="Assets\Icons\close.png" />
     <None Remove="Assets\Icons\cross.png" />
     <None Remove="Assets\Icons\user.png" />
   </ItemGroup>
@@ -29,6 +30,7 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\check.png" />
     <Resource Include="Assets\Icons\clock.png" />
+    <Resource Include="Assets\Icons\close.png" />
     <Resource Include="Assets\Icons\cross.png" />
     <Resource Include="Assets\Icons\user.png" />
   </ItemGroup>
