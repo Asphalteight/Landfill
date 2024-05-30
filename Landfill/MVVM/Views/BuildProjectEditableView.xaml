@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
              mc:Ignorable="d"
              Background="#F3F8F9"
-             Width="500"
+             Width="520"
              Height="710"
              d:DataContext="{d:DesignInstance vm:BuildProjectEditableViewModel, IsDesignTimeCreatable=False}">
     <Grid>
@@ -333,7 +333,7 @@
                    FontSize="12"
                    Width="80"
                    Height="16"
-                   Margin="414,415,0,0" />
+                   Margin="430,415,0,0" />
 
         <ListView ItemsSource="{Binding Path=CurrentItem.Members, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ItemTemplate="{StaticResource ProjectMemberEditableTemplate}"
@@ -341,7 +341,7 @@
                   SelectionChanged="ListView_SelectionChanged"
                   Background="#F3F8F9"
                   BorderBrush="#8FC9B8"
-                  Width="300"
+                  Width="320"
                   Height="225"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
@@ -356,7 +356,7 @@
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    FontSize="10"
-                   Width="300"
+                   Width="320"
                    Height="16"
                    Margin="190,540,0,0" />
 

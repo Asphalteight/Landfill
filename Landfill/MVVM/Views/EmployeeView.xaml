@@ -69,7 +69,7 @@
 
         <ContentPresenter Content="{Binding Navigation.ItemPanelView}"
                           Margin="970 75 0 0"
-                          Width="500"
+                          Width="520"
                           Height="715"
                           VerticalAlignment="Top"
                           HorizontalAlignment="Center" />

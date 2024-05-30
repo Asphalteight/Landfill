@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels.Templates"
              mc:Ignorable="d"
-             d:DesignHeight="100"
-             d:DesignWidth="270"
+             d:DesignHeight="200"
+             d:DesignWidth="290"
              Background="#F3F8F9"
              d:DataContext="{d:DesignInstance vm:ProjectMemberCardViewModel, IsDesignTimeCreatable=True}">
 
-    <ContentPresenter ContentTemplate="{StaticResource ProjectMemberTemplate}" Content="{Binding}"/>
+    <StackPanel>
+        <ContentPresenter ContentTemplate="{StaticResource ProjectMemberEditableTemplate}" Content="{Binding}"/>
+        <ContentPresenter ContentTemplate="{StaticResource ProjectMemberTemplate}"
+                          Content="{Binding}" />
+    </StackPanel>
 
 </UserControl>
