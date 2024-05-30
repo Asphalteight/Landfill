@@ -37,9 +37,10 @@ namespace Landfill.Abstractions
         private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsSelected") return;
-            //(sender as ObservableObject).OnPropertyChanged(e.PropertyName);
-            var replace = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, sender, sender, Items.IndexOf((T)sender));
-            OnCollectionChanged(replace);
+            //var replace = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, sender, sender, Items.IndexOf((T)sender));
+            //OnCollectionChanged(replace);
+            var reset = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
+            OnCollectionChanged(reset);
         }
     }
 }

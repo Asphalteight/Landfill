@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Landfill.Abstractions;
+﻿using Landfill.Abstractions;
 using Landfill.MVVM.Models;
 using Landfill.Services;
 using System.Windows.Input;
@@ -11,7 +10,6 @@ namespace Landfill.MVVM.ViewModels
         #region Свойства и поля
 
         private IItemsService _itemsService;
-        private readonly IMapper _mapper;
         private INavigationService _navigation;
         private BuildProjectModel _currentItem;
 
@@ -24,11 +22,10 @@ namespace Landfill.MVVM.ViewModels
 
         #endregion
 
-        public BuildProjectViewModel(IItemsService itemsService, INavigationService navigation, IMapper mapper, IUserContextService userContext)
+        public BuildProjectViewModel(IItemsService itemsService, INavigationService navigation, IUserContextService userContext)
         {
             _itemsService = itemsService;
-            _navigation = navigation;
-            _mapper = mapper;
+            Navigation = navigation;
             UserContext = userContext;
 
             NavigateToEditProjectCommand = new ViewModelCommand(x => Navigation.NavigateItemPanelTo<BuildProjectEditableViewModel>());

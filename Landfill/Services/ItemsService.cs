@@ -14,11 +14,12 @@ namespace Landfill.Services
     {
         #region Поля и свойства
 
-        private readonly INavigationService _navigation;
+        private INavigationService _navigation;
         private int _selectedItemIndex;
         private int _previousItemIndex;
         private ObservableCollectionWithItemNotify<BuildProjectModel> _items;
 
+        public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
         public int SelectedItemIndex { get => _selectedItemIndex; set { _selectedItemIndex = value; SelectedItemChanged(); OnPropertyChanged(); } }
         public ObservableCollectionWithItemNotify<BuildProjectModel> Items { get => _items; set { _items = value; ItemsChanged(); OnPropertyChanged(); } }
 
@@ -26,7 +27,7 @@ namespace Landfill.Services
 
         public ItemsService(INavigationService navigation)
         {
-            _navigation = navigation;
+            Navigation = navigation;
         }
 
         public void ItemsChanged()
@@ -35,16 +36,20 @@ namespace Landfill.Services
             {
                 SelectedItemIndex = 0;
                 Items[SelectedItemIndex].IsSelected = true;
-                RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
+                RunCommand(x => Navigation.NavigateItemPanelTo<BuildProjectViewModel>());
             }
         }
 
         private void SelectedItemChanged()
         {
-            if (Items.Count == 0 || SelectedItemIndex < 0)
+            if (Items.Count == 0)
             {
-                RunCommand(x => _navigation.NavigateItemPanelTo<EmptyViewModel>());
+                RunCommand(x => Navigation.NavigateItemPanelTo<EmptyViewModel>());
                 return;
+            }
+            else if (SelectedItemIndex < 0)
+            {
+                SelectedItemIndex = 0;
             }
             if (Items.Count > _previousItemIndex && _previousItemIndex >= 0)
             {
@@ -54,7 +59,7 @@ namespace Landfill.Services
             if (SelectedItemIndex >= 0)
             {
                 Items[SelectedItemIndex].IsSelected = true;
-                RunCommand(x => _navigation.NavigateItemPanelTo<BuildProjectViewModel>());
+                RunCommand(x => Navigation.NavigateItemPanelTo<BuildProjectViewModel>());
             }
 
             _previousItemIndex = SelectedItemIndex;

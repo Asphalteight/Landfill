@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Landfill.Abstractions;
 using Landfill.Common.Enums;
+using Landfill.Common.Helpers;
 using Landfill.DataAccess;
 using Landfill.DataAccess.Models;
 using Landfill.MVVM.Models;
@@ -20,11 +21,10 @@ namespace Landfill.MVVM.ViewModels
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
         private INavigationService _navigation;
-        private string _searchText;
         private DateTime _lastSearchTextPressedAt;
 
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
-        public string SearchText { get => _searchText; set { _searchText = value; OnPropertyChanged(); OnSearchTextChanged(); } }
+        public FilterModel Filter { get; set; } = new();
 
         public IItemsService ItemsService { get; set; }
         public IUserContextService UserContextService { get; set; }
@@ -37,7 +37,7 @@ namespace Landfill.MVVM.ViewModels
 
         public EmployeeViewModel(INavigationService navigation, IDbContext dbContext, IMapper mapper, IItemsService itemsService, IUserContextService userContextService)
         {
-            _navigation = navigation;
+            Navigation = navigation;
             _dbContext = dbContext;
             _mapper = mapper;
             ItemsService = itemsService;
@@ -48,12 +48,17 @@ namespace Landfill.MVVM.ViewModels
             NavigateToEmployeeProfileCommand = new ViewModelCommand(x => Navigation.NavigateTo<EmployeeProfileViewModel>());
             NavigateToEmployeesManagingCommand = new ViewModelCommand(x => Navigation.NavigateTo<EmployeesManagingViewModel>());
 
+            Filter.OnSearchTextChanged = OnSearchTextChanged;
+            Filter.OnMyProjectsOnlyCheck = ApplySearch;
+            Filter.OnProjectStateChange = ApplySearch;
+            Filter.OnMinPriceChange = ApplySearch;
+            Filter.OnMaxPriceChange = ApplySearch;
             UpdateItems();
         }
 
-        private void UpdateItems()
+        private void UpdateItems(BuildProject[] projects = null)
         {
-            var projects = _dbContext.QuerySet<BuildProject>().ToList();
+            projects ??= _dbContext.QuerySet<BuildProject>().ToArray();
             ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(projects);
         }
 
@@ -62,6 +67,12 @@ namespace Landfill.MVVM.ViewModels
             UserContextService.ResetStoredUser();
 
             RunCommand(x => Navigation.NavigateTo<SignInViewModel>(obj, WindowTypeEnum.Login));
+        }
+
+        private void ExecuteNewBuildProjectCommand(object obj)
+        {
+            ItemsService.SelectedItemIndex = -1;
+            RunCommand(x => Navigation.NavigateItemPanelTo<BuildProjectAddNewViewModel>());
         }
 
         private void OnSearchTextChanged()
@@ -83,19 +94,35 @@ namespace Landfill.MVVM.ViewModels
 
         private void ApplySearch()
         {
-            var searchResult = _dbContext.QuerySet<BuildProject>().Where(x =>
-                x.Name.Contains(SearchText) ||
-                x.Description.Contains(SearchText) ||
-                x.Address.Contains(SearchText) ||
-                x.Customer.Contains(SearchText)).ToList();
+            var query = _dbContext.QuerySet<BuildProject>();
 
-            ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(searchResult);
-        }
+            if (!Filter.SearchText.IsNullOrWhiteSpace())
+            {
+                var searchText = Filter.SearchText;
+                query = query.Where(x =>
+                    x.Name.Contains(searchText) ||
+                    x.Description.Contains(searchText) ||
+                    x.Address.Contains(searchText) ||
+                    x.Customer.Contains(searchText));
+            }
+            if (Filter.MyProjectsOnly)
+            {
+                query = query.Where(x => x.EmployeeId == UserContextService.CurrentUser.Id);
+            }
+            if (Filter.ProjectState.HasValue)
+            {
+                query = query.Where(x => x.State == Filter.ProjectState.Value);
+            }
+            if (Filter.MinPrice.HasValue)
+            {
+                query = query.Where(x => x.Price >= Filter.MinPrice.Value);
+            }
+            if (Filter.MaxPrice.HasValue)
+            {
+                query = query.Where(x => x.Price <= Filter.MaxPrice.Value);
+            }
 
-        private void ExecuteNewBuildProjectCommand(object obj)
-        {
-            ItemsService.SelectedItemIndex = -1;
-            RunCommand(x => Navigation.NavigateItemPanelTo<BuildProjectAddNewViewModel>());
+            UpdateItems(query.ToArray());
         }
     }
 }
