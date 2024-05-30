@@ -39,7 +39,7 @@
             </StackPanel>
         </StackPanel>
         <TextBlock HorizontalAlignment="Center"
-                   Visibility="{Binding CurrentEmployee.Roles.Length, Converter={StaticResource VisibleIfAnyItemConverter}}"
+                   Visibility="{Binding CurrentEmployee.Roles, Converter={StaticResource RolesListToVisibleConverter}}"
                    VerticalAlignment="Top"
                    TextAlignment="Center"
                    FontSize="17"

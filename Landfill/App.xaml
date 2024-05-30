@@ -81,7 +81,7 @@
         <converters:EnumToStringConverter x:Key="EnumValueToStringConverter" />
         <converters:DateOnlyStringConverter x:Key="DateOnlyStringConverter" />
         <converters:ProjectNumberConverter x:Key="ProjectNumberConverter" />
-        <converters:VisibleIfAnyItemConverter x:Key="VisibleIfAnyItemConverter" />
+        <converters:RolesListToVisibleConverter x:Key="RolesListToVisibleConverter" />
         <converters:VisibleIfNoItemsConverter x:Key="VisibleIfNoItemsConverter" />
         <converters:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
         <converters:PersonFullNameToInitialsConverter x:Key="PersonFullNameToInitialsConverter" />

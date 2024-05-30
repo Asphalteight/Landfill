@@ -37,10 +37,13 @@ namespace Landfill.MVVM.ViewModels
 
         private bool CanExecuteSaveProfileCommand(object obj)
         {
-            var isValid = UserContext.CurrentUser != null &&
-                (new[] { UserContext.CurrentUser.FirstName, UserContext.CurrentUser.LastName, UserContext.CurrentUser.Phone }).All(x => !x.IsNullOrWhiteSpace());
-            var isModified = UserContext.CurrentUser.IsModified;
-            return isValid && isModified;
+            if (UserContext.CurrentUser != null)
+            {
+                var isValid = (new[] { UserContext.CurrentUser.FirstName, UserContext.CurrentUser.LastName, UserContext.CurrentUser.Phone }).All(x => !x.IsNullOrWhiteSpace());
+                var isModified = UserContext.CurrentUser.IsModified;
+                return isValid && isModified; 
+            }
+            return false;
         }
 
         private void ExecuteSaveProfileCommand(object obj)

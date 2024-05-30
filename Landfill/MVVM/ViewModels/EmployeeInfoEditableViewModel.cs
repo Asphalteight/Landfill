@@ -59,7 +59,7 @@ namespace Landfill.MVVM.ViewModels
 
         private void ExecuteSaveEmployeeCommand(object obj)
         {
-            var roles = new List<RoleEnum>();
+            var roles = new List<RoleEnum>() { RoleEnum.Employee };
             if (CurrentEmployee.IsAdmin)
             {
                 roles.Add(RoleEnum.Admin);
