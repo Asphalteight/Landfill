@@ -3,6 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:enum="clr-namespace:Landfill.Common.Enums;assembly=Landfill.Common"
+             xmlns:conv="clr-namespace:Landfill.Converters"
              xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
              mc:Ignorable="d"
              Background="#F3F8F9"
@@ -277,8 +279,8 @@
                    Height="16"
                    Margin="10,492,0,0" />
 
-        <ComboBox SelectedItem="{Binding CurrentItem.State}"
-                  ItemsSource="{Binding CurrentItem.State, Converter={StaticResource EnumValuesToListConverter}, UpdateSourceTrigger=PropertyChanged}"
+        <ComboBox SelectedValue="{Binding CurrentItem.State, Converter={StaticResource EnumToStringConverter}, ConverterParameter={x:Type enum:ProjectStateEnum}}"
+                  ItemsSource="{Binding Source={conv:EnumToItemsSourceProvider {x:Type enum:ProjectStateEnum}}}"
                   Foreground="#05402A"
                   Background="#B2CCC4"
                   VerticalAlignment="Top"
@@ -286,14 +288,7 @@
                   FontSize="16"
                   Width="144"
                   Height="26"
-                  Margin="10,513,0,0">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource EnumValueToStringConverter}}">
-                    </TextBlock>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                  Margin="10,513,0,0" />
 
         <TextBlock Text="Создано:"
                    Foreground="#92A9A0"

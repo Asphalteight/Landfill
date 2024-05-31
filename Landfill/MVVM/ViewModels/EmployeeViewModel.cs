@@ -53,13 +53,9 @@ namespace Landfill.MVVM.ViewModels
             Filter.OnProjectStateChange = ApplySearch;
             Filter.OnMinPriceChange = ApplySearch;
             Filter.OnMaxPriceChange = ApplySearch;
-            UpdateItems();
-        }
+            Filter.OnSortChange = ApplySearch;
 
-        private void UpdateItems(BuildProject[] projects = null)
-        {
-            projects ??= _dbContext.QuerySet<BuildProject>().ToArray();
-            ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(projects);
+            ApplySearch();
         }
 
         private void ExecuteLogoutCommand(object obj)
@@ -121,8 +117,23 @@ namespace Landfill.MVVM.ViewModels
             {
                 query = query.Where(x => x.Price <= Filter.MaxPrice.Value);
             }
+            switch (Filter.Sort)
+            {
+                case SortEnum.CreatedDesc:
+                    query = query.OrderByDescending(x => x.CreatedOn);
+                    break;
+                case SortEnum.CreatedAsc:
+                    query = query.OrderBy(x => x.CreatedOn);
+                    break;
+                case SortEnum.PriceDesc:
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case SortEnum.PriceAsc:
+                    query = query.OrderBy(x => x.Price);
+                    break;
+            }
 
-            UpdateItems(query.ToArray());
+            ItemsService.Items = _mapper.Map<ObservableCollectionWithItemNotify<BuildProjectModel>>(query.ToArray());
         }
     }
 }

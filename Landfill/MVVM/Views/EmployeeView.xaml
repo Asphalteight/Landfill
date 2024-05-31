@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Landfill.MVVM.ViewModels"
              xmlns:enum="clr-namespace:Landfill.Common.Enums;assembly=Landfill.Common"
+             xmlns:conv="clr-namespace:Landfill.Converters"
              mc:Ignorable="d"
              Height="800"
              Width="1500"
@@ -226,5 +227,22 @@
                    TextWrapping="Wrap"
                    Height="20"
                    RenderTransformOrigin="-0.11,0.467" />
+        <TextBlock Text="Сортировать по"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="13"
+                   Margin="339,42,0,0"
+                   TextWrapping="Wrap"
+                   Height="20" />
+        <ComboBox SelectedValue="{Binding Filter.Sort, Converter={StaticResource EnumToStringConverter}, ConverterParameter={x:Type enum:SortEnum}}"
+                  ItemsSource="{Binding Source={conv:EnumToItemsSourceProvider {x:Type enum:SortEnum}}}"
+                  Foreground="#05402A"
+                  Background="#B2CCC4"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  FontSize="13"
+                  Width="193"
+                  Margin="446,40,0,0"
+                  Height="24" />
     </Grid>
 </UserControl>

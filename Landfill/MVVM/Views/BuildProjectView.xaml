@@ -214,7 +214,7 @@
                    Width="90"
                    Height="16"
                    Margin="10,492,0,0" />
-        <TextBlock Text="{Binding CurrentItem.State, Converter={StaticResource EnumValueToStringConverter}}"
+        <TextBlock Text="{Binding CurrentItem.State, Converter={StaticResource EnumToStringConverter}}"
                    Foreground="#05402A"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"

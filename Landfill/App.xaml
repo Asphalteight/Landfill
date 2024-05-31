@@ -78,7 +78,7 @@
 
         <!--Конвертеры-->
 
-        <converters:EnumToStringConverter x:Key="EnumValueToStringConverter" />
+        <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
         <converters:DateOnlyStringConverter x:Key="DateOnlyStringConverter" />
         <converters:ProjectNumberConverter x:Key="ProjectNumberConverter" />
         <converters:RolesListToVisibleConverter x:Key="RolesListToVisibleConverter" />
@@ -86,21 +86,13 @@
         <converters:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
         <converters:PersonFullNameToInitialsConverter x:Key="PersonFullNameToInitialsConverter" />
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:EnumValuesToListConverter x:Key="EnumValuesToListConverter" />
         <converters:DateTimeToDateOnlyConverter x:Key="DateTimeToDateOnlyConverter" />
         <converters:PriceConverter x:Key="PriceConverter" />
         <converters:ComparisonConverter x:Key="ComparisonConverter" />
         <converters:NullableIntegerConverter x:Key="NullableIntegerConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-        <ObjectDataProvider x:Key="DataFromEnum"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type system:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="enum:ProjectStateEnum" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
+        
         <!--Стили-->
 
         <!--Стиль кликабельного текстового блока -->
@@ -1587,7 +1579,7 @@
                                Width="72"
                                Height="16"
                                Margin="523,162,0,0" />
-                    <TextBlock Text="{Binding State, Converter={StaticResource EnumValueToStringConverter}}"
+                    <TextBlock Text="{Binding State, Converter={StaticResource EnumToStringConverter}}"
                                Foreground="#05402A"
                                VerticalAlignment="Top"
                                HorizontalAlignment="Left"
