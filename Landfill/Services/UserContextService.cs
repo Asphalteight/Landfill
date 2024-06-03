@@ -16,7 +16,7 @@ namespace Landfill.Services
         public EmployeeInfoModel CurrentUser { get; set; }
         public PermissionsModel Permissions { get; set; }
         public void SetUserFromStored();
-        public void SetUser(string userName);
+        public void SetUser(UserAccount userName);
         public void ResetStoredUser();
     }
 
@@ -43,32 +43,41 @@ namespace Landfill.Services
             var isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
             var reader = new StreamReader(new IsolatedStorageFileStream(FileName, FileMode.OpenOrCreate, isolatedStorage));
 
-            string userName = null;
+            UserAccount account = null;
             if (reader != null)
             {
                 while (!reader.EndOfStream)
                 {
-                    userName = reader.ReadLine().Split('-')[0];
+                    var login = reader.ReadLine();
+                    var passwordHash = reader.ReadLine();
+                    reader.ReadLine();
+                    account = new UserAccount
+                    {
+                        Login = login,
+                        PasswordHash = passwordHash
+                    };
                 }
             }
             reader.Close();
 
-            if (userName != null)
+            if (account != null)
             {
-                SetCurrentUser(userName);
+                SetCurrentUser(account);
             }
         }
 
-        public void SetUser(string userName)
+        public void SetUser(UserAccount account)
         {
             var isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly();
             var writer = new StreamWriter(new IsolatedStorageFileStream(FileName, FileMode.OpenOrCreate, isolatedStorage));
 
-            writer.WriteLine($"{userName}-Stored at {DateTime.Now}");
+            writer.WriteLine(account.Login);
+            writer.WriteLine(account.PasswordHash);
+            writer.Write($"Stored at {DateTime.Now}");
             writer.Flush();
             writer.Close();
 
-            SetCurrentUser(userName);
+            SetCurrentUser(account);
         }
 
         public void ResetStoredUser()
@@ -78,9 +87,13 @@ namespace Landfill.Services
             CurrentUser = null;
         }
 
-        private void SetCurrentUser(string userName)
+        private void SetCurrentUser(UserAccount account)
         {
-            var employee = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == userName)?.Employee;
+            var employee = _dbContext.QuerySet<UserAccount>().FirstOrDefault(x => x.Login == account.Login && x.PasswordHash == account.PasswordHash)?.Employee;
+            if (employee == null)
+            {
+                return;
+            }
             CurrentUser = _mapper.Map<EmployeeInfoModel>(employee);
 
             Func<RoleEnum, bool> adminOrManager = (role) => role == RoleEnum.Admin || role == RoleEnum.Manager;

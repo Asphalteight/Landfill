@@ -64,7 +64,7 @@ namespace Landfill.MVVM.ViewModels
                 return;
             }
 
-            _userContextService.SetUser(user.Login);
+            _userContextService.SetUser(user);
 
             RunCommand(x => Navigation.NavigateTo<EmployeeViewModel>(obj, WindowTypeEnum.Main));
         }
