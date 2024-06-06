@@ -13,6 +13,9 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Редактирование проекта
+    /// </summary>
     public class BuildProjectEditableViewModel : ViewModelBase
     {
         #region Свойства и поля
@@ -146,6 +149,7 @@ namespace Landfill.MVVM.ViewModels
             _dbContext.SaveChanges();
 
             ItemsService.Items.RemoveAt(ItemsService.SelectedItemIndex);
+            ItemsService.SelectedItemIndex = -2;
         }
     }
 }

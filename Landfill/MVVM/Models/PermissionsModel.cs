@@ -9,12 +9,13 @@ namespace Landfill.MVVM.Models
         public bool EditEmployee { get => _editEmployee; set { _editEmployee = value; OnPropertyChanged(); } }
         public bool EditEmployeeAdminRole { get => _editEmployeeAdminRole; set { _editEmployeeAdminRole = value; OnPropertyChanged(); } }
         public bool EditEmployeeManagerRole { get => _editEmployeeManagerRole; set { _editEmployeeManagerRole = value; OnPropertyChanged(); } }
-
+        public bool EditEmployeePersonalInfo { get => _editEmployeePersonalInfo; set { _editEmployeePersonalInfo = value; OnPropertyChanged(); } }
 
         private bool _addNewProjects;
         private bool _editProjects;
         private bool _editEmployee;
         private bool _editEmployeeAdminRole;
         private bool _editEmployeeManagerRole;
+        private bool _editEmployeePersonalInfo;
     }
 }

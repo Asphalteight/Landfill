@@ -10,9 +10,12 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Авторизация
+    /// </summary>
     public class SignInViewModel : ViewModelBase
     {
-        #region Проперти
+        #region Поля и свойства
 
         private readonly IDbContext _dbContext;
         private ErrorMessageModel _errorMessage = new();

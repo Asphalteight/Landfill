@@ -70,10 +70,11 @@
                           VerticalAlignment="Top"
                           HorizontalAlignment="Left" />
         <TextBlock HorizontalAlignment="Left"
+                   Foreground="#05402A"
                    VerticalAlignment="Top"
                    TextAlignment="Center"
-                   FontSize="17"
-                   Margin="510,17,0,0"
+                   FontSize="22"
+                   Margin="510,14,0,0"
                    TextWrapping="Wrap"
                    Height="30"
                    Text="Сотрудники организации"

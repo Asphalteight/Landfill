@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Редактирование сотрудника
+    /// </summary>
     public class EmployeeInfoEditableViewModel : ViewModelBase
     {
         private readonly IDbContext _dbContext;

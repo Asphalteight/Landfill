@@ -1,6 +1,7 @@
 ﻿using Landfill.Abstractions;
 using Landfill.MVVM.Models;
 using Landfill.MVVM.ViewModels;
+using System;
 
 namespace Landfill.Services
 {
@@ -8,6 +9,7 @@ namespace Landfill.Services
     {
         public ObservableCollectionWithItemNotify<BuildProjectModel> Items { get; set; }
         public int SelectedItemIndex { get; set; }
+        public Action RunFiltersUpdate { get; set; }
     }
 
     public class ItemsService : ViewModelBase, IItemsService
@@ -22,6 +24,7 @@ namespace Landfill.Services
         public INavigationService Navigation { get => _navigation; private set { _navigation = value; OnPropertyChanged(); } }
         public int SelectedItemIndex { get => _selectedItemIndex; set { _selectedItemIndex = value; SelectedItemChanged(); OnPropertyChanged(); } }
         public ObservableCollectionWithItemNotify<BuildProjectModel> Items { get => _items; set { _items = value; ItemsChanged(); OnPropertyChanged(); } }
+        public Action RunFiltersUpdate { get; set; }
 
         #endregion
 
@@ -42,7 +45,12 @@ namespace Landfill.Services
 
         private void SelectedItemChanged()
         {
-            if (Items.Count == 0)
+            if (Items.Count > _previousItemIndex && _previousItemIndex >= 0)
+            {
+                Items[_previousItemIndex].IsSelected = false;
+            }
+
+            if (Items.Count == 0 || SelectedItemIndex == -2)
             {
                 RunCommand(x => Navigation.NavigateItemPanelTo<EmptyViewModel>());
                 return;
@@ -51,11 +59,7 @@ namespace Landfill.Services
             {
                 SelectedItemIndex = 0;
             }
-            if (Items.Count > _previousItemIndex && _previousItemIndex >= 0)
-            {
-                Items[_previousItemIndex].IsSelected = false;
-            }
-
+            
             if (SelectedItemIndex >= 0)
             {
                 Items[SelectedItemIndex].IsSelected = true;

@@ -5,6 +5,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>Landfill.App</StartupObject>
+    <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,12 @@
     <None Remove="Assets\Icons\close.png" />
     <None Remove="Assets\Icons\cross.png" />
     <None Remove="Assets\Icons\user.png" />
+    <None Remove="Assets\logo.ico" />
+    <None Remove="Assets\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +40,8 @@
     <Resource Include="Assets\Icons\close.png" />
     <Resource Include="Assets\Icons\cross.png" />
     <Resource Include="Assets\Icons\user.png" />
+    <Resource Include="Assets\logo.ico" />
+    <Resource Include="Assets\logo.png" />
   </ItemGroup>
-
+	
 </Project>

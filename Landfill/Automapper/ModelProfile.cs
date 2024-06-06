@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace Landfill.Automapper
 {
-    public class ModelToModelMapProfile : Profile
+    public class ModelProfile : Profile
     {
-        public ModelToModelMapProfile()
+        public ModelProfile()
         {
             CreateMap<Employee, EmployeeInfoModel>()
                 .ForMember(x => x.IsNew, o => o.Ignore())

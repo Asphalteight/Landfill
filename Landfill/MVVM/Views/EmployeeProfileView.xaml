@@ -60,7 +60,7 @@
                 Height="28"
                 Width="198"
                 FontSize="13" />
-        <Button Command="{Binding CancelChangesCommand}"
+        <Button Command="{Binding NavigateToMainCommand}"
                 Background="LightGray"
                 Content="Отменить"
                 VerticalAlignment="Top"
@@ -77,7 +77,7 @@
                    Height="20"
                    RenderTransformOrigin="0.655,0.575"><Run Text="Имя" /><Run Text=" " /><Run Text="*"
                                                                                               Foreground="Red" /></TextBlock>
-        <TextBox Text="{Binding UserContext.CurrentUser.FirstName, UpdateSourceTrigger=PropertyChanged}"
+        <TextBox Text="{Binding EmployeeInfoModel.FirstName, UpdateSourceTrigger=PropertyChanged}"
                  Background="#B2CCC4"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
@@ -93,7 +93,7 @@
                    TextWrapping="Wrap"
                    Height="20"><Run Text="Фамилия" /><Run Text=" " /><Run Text="*"
                                                                           Foreground="Red" /></TextBlock>
-        <TextBox Text="{Binding UserContext.CurrentUser.LastName, UpdateSourceTrigger=PropertyChanged}"
+        <TextBox Text="{Binding EmployeeInfoModel.LastName, UpdateSourceTrigger=PropertyChanged}"
                  Background="#B2CCC4"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
@@ -108,7 +108,8 @@
                    Margin="559,478,0,0"
                    TextWrapping="Wrap"
                    Height="20"><Run Text="Отчество" /></TextBlock>
-        <TextBox Text="{Binding UserContext.CurrentUser.MiddleName, UpdateSourceTrigger=PropertyChanged}"
+        
+        <TextBox Text="{Binding EmployeeInfoModel.MiddleName, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"
@@ -124,7 +125,7 @@
                    TextWrapping="Wrap"
                    Height="20"><Run Text="Номер телефона" /><Run Text=" " /><Run Text="*"
                                                                                  Foreground="Red" /></TextBlock>
-        <TextBox Text="{Binding UserContext.CurrentUser.Phone, UpdateSourceTrigger=PropertyChanged}"
+        <TextBox Text="{Binding EmployeeInfoModel.Phone, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"
@@ -142,5 +143,14 @@
                    Height="48"
                    Text="Редактировать данные профиля"
                    Width="440" />
+        <Button Command="{Binding NavigateToMainCommand}"
+                Background="#8FC9B8"
+                Content="Главная"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="1188,12,0,0"
+                Height="35"
+                Width="133"
+                FontSize="15" />
     </Grid>
 </UserControl>

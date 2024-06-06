@@ -68,14 +68,15 @@
                    Width="300"
                    FontSize="12" />
 
-        <Viewbox Margin="360,268,0,0"
+        <Viewbox Margin="466,229,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Height="26">
+                 Height="18"
+                 RenderTransformOrigin="0.542,0.359">
             <CheckBox FontSize="9"
                       Padding="6 1 6 0"
                       IsChecked="{Binding Credentials.ShowPassword}"
-                      Content="Показать пароль">
+                      Content="Показать">
             </CheckBox>
         </Viewbox>
 

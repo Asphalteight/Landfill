@@ -97,12 +97,17 @@ namespace Landfill.Services
             CurrentUser = _mapper.Map<EmployeeInfoModel>(employee);
 
             Func<RoleEnum, bool> adminOrManager = (role) => role == RoleEnum.Admin || role == RoleEnum.Manager;
+            Func<RoleEnum, bool> admin = (role) => role == RoleEnum.Admin;
 
-            Permissions.AddNewProjects = CurrentUser.Roles.Any(adminOrManager);
-            Permissions.EditProjects = CurrentUser.Roles.Any(adminOrManager);
-            Permissions.EditEmployee = CurrentUser.Roles.Any(adminOrManager);
-            Permissions.EditEmployeeAdminRole = CurrentUser.Roles.Any(x => x == RoleEnum.Admin);
-            Permissions.EditEmployeeManagerRole = CurrentUser.Roles.Any(adminOrManager);
+            Permissions.AddNewProjects = CurrentUser.Roles.Any(AdminOrManagerRole());
+            Permissions.EditProjects = CurrentUser.Roles.Any(AdminOrManagerRole());
+            Permissions.EditEmployee = CurrentUser.Roles.Any(AdminOrManagerRole());
+            Permissions.EditEmployeeAdminRole = CurrentUser.Roles.Any(AdminRole());
+            Permissions.EditEmployeeManagerRole = CurrentUser.Roles.Any(AdminOrManagerRole());
+            Permissions.EditEmployeePersonalInfo = CurrentUser.Roles.Any(AdminRole());
         }
+
+        private Func<RoleEnum, bool> AdminRole() => role => role == RoleEnum.Admin;
+        private Func<RoleEnum, bool> AdminOrManagerRole() => role => role == RoleEnum.Admin || role == RoleEnum.Manager;
     }
 }

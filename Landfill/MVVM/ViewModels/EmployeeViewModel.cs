@@ -14,9 +14,12 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Главное окно
+    /// </summary>
     public class EmployeeViewModel : ViewModelBase
     {
-        #region Проперти
+        #region Поля и свойства
 
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -55,7 +58,11 @@ namespace Landfill.MVVM.ViewModels
             Filter.OnMaxPriceChange = ApplySearch;
             Filter.OnSortChange = ApplySearch;
 
-            ApplySearch();
+            if (ItemsService.RunFiltersUpdate == null)
+            {
+                ItemsService.RunFiltersUpdate = ApplySearch;
+            }
+            ItemsService.RunFiltersUpdate();
         }
 
         private void ExecuteLogoutCommand(object obj)

@@ -54,6 +54,7 @@
                                                        Foreground="Red" />
         </TextBlock>
         <TextBox Text="{Binding CurrentEmployee.LastName, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding UserContext.Permissions.EditEmployeePersonalInfo}"
                  Foreground="#05402A"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"
@@ -76,6 +77,7 @@
                                                    Foreground="Red" />
         </TextBlock>
         <TextBox Text="{Binding CurrentEmployee.FirstName, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding UserContext.Permissions.EditEmployeePersonalInfo}"
                  Foreground="#05402A"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"
@@ -96,6 +98,7 @@
                    Height="16"
                    Margin="10,173,0,0" />
         <TextBox Text="{Binding CurrentEmployee.MiddleName, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding UserContext.Permissions.EditEmployeePersonalInfo}"
                  Foreground="#05402A"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"
@@ -118,6 +121,7 @@
                                                               Foreground="Red" />
         </TextBlock>
         <TextBox Text="{Binding CurrentEmployee.Phone, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding UserContext.Permissions.EditEmployeePersonalInfo}"
                  Foreground="#05402A"
                  Background="#B2CCC4"
                  VerticalAlignment="Top"

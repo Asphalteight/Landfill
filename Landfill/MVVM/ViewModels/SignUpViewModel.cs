@@ -10,9 +10,12 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Регистрация 1-й этап
+    /// </summary>
     public partial class SignUpViewModel : ViewModelBase
     {
-        #region Проперти
+        #region Поля и свойства
 
         private readonly IDbContext _dbContext;
         private readonly ICredentialsService _credentialsService;

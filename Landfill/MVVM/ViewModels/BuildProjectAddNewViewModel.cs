@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Добавление проекта
+    /// </summary>
     public class BuildProjectAddNewViewModel : ViewModelBase
     {
         #region Свойства и поля
@@ -127,6 +130,7 @@ namespace Landfill.MVVM.ViewModels
             ItemsService.Items.Add(CurrentItem);
 
             ItemsService.SelectedItemIndex = ItemsService.Items.IndexOf(CurrentItem);
+            ItemsService.RunFiltersUpdate();
         }
     }
 }

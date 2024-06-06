@@ -13,7 +13,12 @@ namespace Landfill.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var priceString = (value as string)[..^2];
+            string priceString = value as string;
+            if (priceString.Length > 2)
+            {
+                priceString = priceString[..^2];
+            }
+
             if (decimal.TryParse(priceString, out var result))
             {
                 return Math.Truncate(100*result)/100;

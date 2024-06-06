@@ -11,9 +11,12 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Регистрация 2-й этап
+    /// </summary>
     public class SignUpSetEmployeeViewModel : ViewModelBase
     {
-        #region Проперти
+        #region Поля и свойства
 
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;

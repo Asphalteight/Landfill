@@ -59,7 +59,7 @@ namespace Landfill
             services.AddSingleton<Func<Type, Window>>(provider => view => (Window)provider.GetRequiredService(view));
 
             services.AddDbContext<IDbContext, LandfillDbContext>();
-            services.AddAutoMapper(typeof(ModelToModelMapProfile).Assembly);
+            services.AddAutoMapper(typeof(ModelProfile).Assembly);
 
             _serviceProvider = services.BuildServiceProvider();
 

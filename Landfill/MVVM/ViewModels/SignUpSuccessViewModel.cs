@@ -5,9 +5,12 @@ using System.Windows.Input;
 
 namespace Landfill.MVVM.ViewModels
 {
+    /// <summary>
+    /// Успешная регистрация
+    /// </summary>
     public class SignUpSuccessViewModel : ViewModelBase
     {
-        #region Проперти
+        #region Поля и свойства
 
         private string _backToSignRemaningSeconds = "3";
         private INavigationService _navigation;
